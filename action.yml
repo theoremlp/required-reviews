@@ -1,4 +1,4 @@
-name: required-reviewers
+name: required-reviews
 description: Checks the required reviewers have approved a PR.
 author: theoremlp
 inputs:
