@@ -35,12 +35,11 @@ async function run(): Promise<void> {
       core.setFailed("Unable to retrieve .github/reviewers.json");
       return;
     }
+    const decodedContent = btoa(reviewersRequest.data.content);
 
-    core.info(`Reviewer config:\n${reviewersRequest.data.content}`);
+    core.info(`Reviewer config:\n${decodedContent}`);
 
-    const reviewersConfig = JSON.parse(
-      reviewersRequest.data.content
-    ) as Reviewers;
+    const reviewersConfig = JSON.parse(decodedContent) as Reviewers;
 
     // note this will truncate at >3000 files
     const allPrFiles = await octokit.rest.pulls.listFiles({
