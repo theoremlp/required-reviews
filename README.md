@@ -26,6 +26,7 @@ To configure this action create a file in your `.github/workflows` directory:
 name: Required Reviews
 on:
   pull_request: {}
+  pull_request_review: {}
 jobs:
   required-reviews:
     name: Required Reviews

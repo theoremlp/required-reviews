@@ -32,16 +32,26 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
+function getPrNumber(context) {
+    if (context.eventName === "pull_request") {
+        return github.context.payload.number;
+    }
+    else if (context.eventName === "pull_request_review") {
+        return github.context.payload.pull_request
+            .number;
+    }
+    return undefined;
+}
 async function run() {
     try {
         const authToken = core.getInput("github-token");
         const octokit = github.getOctokit(authToken);
         const context = github.context;
-        if (github.context.eventName !== "pull_request") {
-            core.setFailed(`Action invoked on an event != pull_request (${github.context.eventName}`);
+        const prNumber = getPrNumber(context);
+        if (prNumber === undefined) {
+            core.setFailed(`Action invoked on unexpected event type '${github.context.eventName}'`);
             return;
         }
-        const pr = github.context.payload;
         // load configuration, note that this call behaves differently with file sizes larger than 1MB
         const reviewersRequest = await octokit.rest.repos.getContent({
             ...context.repo,
@@ -56,13 +66,13 @@ async function run() {
         // note that this will truncate at >3000 files
         const allPrFiles = await octokit.rest.pulls.listFiles({
             ...context.repo,
-            pull_number: pr.number,
+            pull_number: prNumber,
         });
         const modifiedFilepaths = allPrFiles.data.map((file) => file.filename);
         // actual reviews
         const prReviews = await octokit.rest.pulls.listReviews({
             ...context.repo,
-            pull_number: pr.number,
+            pull_number: prNumber,
         });
         const approvals = prReviews.data
             .filter((review) => review.state === "APPROVED")
