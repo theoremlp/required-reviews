@@ -50,7 +50,8 @@ async function run() {
             core.setFailed("Unable to retrieve .github/reviewers.json");
             return;
         }
-        const decodedContent = atob(reviewersRequest.data.content);
+        core.info("Raw content: " + reviewersRequest.data.content);
+        const decodedContent = atob(reviewersRequest.data.content.replace(/\n/g, ""));
         core.info(`Reviewer config:\n${decodedContent}`);
         const reviewersConfig = JSON.parse(decodedContent);
         // note this will truncate at >3000 files
