@@ -42,6 +42,7 @@ async function run() {
             return;
         }
         const pr = github.context.payload;
+        // load configuration, note that this call behaves differently with file sizes larger than 1MB
         const reviewersRequest = await octokit.rest.repos.getContent({
             ...context.repo,
             path: ".github/reviewers.json",
@@ -50,11 +51,9 @@ async function run() {
             core.setFailed("Unable to retrieve .github/reviewers.json");
             return;
         }
-        core.info("Raw content: " + reviewersRequest.data.content);
         const decodedContent = atob(reviewersRequest.data.content.replace(/\n/g, ""));
-        core.info(`Reviewer config:\n${decodedContent}`);
         const reviewersConfig = JSON.parse(decodedContent);
-        // note this will truncate at >3000 files
+        // note that this will truncate at >3000 files
         const allPrFiles = await octokit.rest.pulls.listFiles({
             ...context.repo,
             pull_number: pr.number,
@@ -75,17 +74,20 @@ async function run() {
             const affectedFiles = modifiedFilepaths.filter((file) => file.startsWith(prefix));
             if (affectedFiles.length > 0) {
                 // evaluate rule
-                const conf = reviewersConfig.reviewers[prefix];
-                const count = approvals.filter((user) => conf.users.find((u) => u === user)).length;
-                if (count < conf.requiredApproverCount) {
-                    core.warning("Files:\n" +
+                const reviewRequirements = reviewersConfig.reviewers[prefix];
+                const relevantApprovals = approvals.filter((user) => reviewRequirements.users.find((u) => u === user));
+                const count = relevantApprovals.length;
+                if (count < reviewRequirements.requiredApproverCount) {
+                    core.warning("Modified Files:\n" +
                         affectedFiles.map((f) => ` - ${f}\n`) +
-                        `Require ${conf.requiredApproverCount} reviews from users:\n` +
-                        conf.users.map((u) => `- ${u}\n` + `But only ${count} approvals were found.`));
+                        `Require ${reviewRequirements.requiredApproverCount} reviews from:\n` +
+                        reviewRequirements.users.map((u) => ` - ${u}\n`) +
+                        `But only found ${count} approvals: ` +
+                        `[${relevantApprovals.join(", ")}].`);
                     approved = false;
                 }
                 else {
-                    core.info(`${prefix} review requirements met`);
+                    core.info(`${prefix} review requirements met.`);
                 }
             }
         }
