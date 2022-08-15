@@ -35,7 +35,7 @@ async function run(): Promise<void> {
       core.setFailed("Unable to retrieve .github/reviewers.json");
       return;
     }
-    const decodedContent = btoa(reviewersRequest.data.content);
+    const decodedContent = atob(reviewersRequest.data.content);
 
     core.info(`Reviewer config:\n${decodedContent}`);
 
