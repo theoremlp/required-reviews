@@ -1,0 +1,28 @@
+{
+  "name": "required-reviewers",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "license": "Proprietary",
+  "private": true,
+  "scripts": {
+    "build": "yarn && yarn lint && yarn tsc",
+    "format": "eslint 'src/' --fix && prettier --write 'src/**/*.{js,jsx,css,json,md,scss,ts,tsx}'",
+    "lint": "eslint 'src/' && prettier --check 'src/**/*.{js,jsx,css,json,md,scss,ts,tsx}'"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "eslint": "^8.21.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  },
+  "packageManager": "yarn@3.1.0",
+  "dependencies": {
+    "@actions/core": "^1.9.1",
+    "@actions/github": "^5.0.3",
+    "@octokit/webhooks-types": "^6.3.5"
+  }
+}
