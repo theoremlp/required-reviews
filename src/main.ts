@@ -35,6 +35,9 @@ async function run(): Promise<void> {
       core.setFailed("Unable to retrieve .github/reviewers.json");
       return;
     }
+
+    core.info(`Reviewer config:\n${reviewersRequest.data.content}`);
+
     const reviewersConfig = JSON.parse(
       reviewersRequest.data.content
     ) as Reviewers;
