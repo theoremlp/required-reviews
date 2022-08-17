@@ -1,5 +1,6 @@
-name: Lint
-on: [pull_request]
+name: Update Deps
+on:
+  pull_request: {}
 
 jobs:
   check:
@@ -14,3 +15,7 @@ jobs:
         run: yarn
       - name: Lint
         run: yarn lint
+      - name: Test
+        run: yarn jest
+      - name: Build
+        run: yarn build
