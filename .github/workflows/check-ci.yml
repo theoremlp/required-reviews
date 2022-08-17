@@ -1,4 +1,4 @@
-name: Update Deps
+name: CI
 on:
   pull_request: {}
 
