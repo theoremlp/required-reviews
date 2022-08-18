@@ -30,6 +30,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.check = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 function getPrNumber(context) {
@@ -42,6 +43,48 @@ function getPrNumber(context) {
     }
     return undefined;
 }
+function getPossibleApprovers(conf, teams) {
+    const namedUsers = conf.users || [];
+    const usersFromAllNamedTeams = (conf.teams || [])
+        .map((team) => teams[team].users)
+        .reduce((left, right) => [...left, ...right], []);
+    return new Set([...namedUsers, ...usersFromAllNamedTeams]);
+}
+function check(reviewersConfig, modifiedFilepaths, approvals, infoLog, warnLog) {
+    let approved = true;
+    for (const prefix in reviewersConfig.reviewers) {
+        // find files that match the rule
+        const affectedFiles = modifiedFilepaths.filter((file) => file.startsWith(prefix));
+        if (affectedFiles.length > 0) {
+            // evaluate rule
+            const reviewRequirements = reviewersConfig.reviewers[prefix];
+            const possibleApprovers = getPossibleApprovers(reviewersConfig.reviewers[prefix], reviewersConfig.teams || {});
+            const relevantApprovals = approvals.filter((user) => possibleApprovers.has(user));
+            const count = relevantApprovals.length;
+            if (count < reviewRequirements.requiredApproverCount) {
+                warnLog("Modified Files:\n" +
+                    affectedFiles.map((f) => ` - ${f}\n`) +
+                    `Require ${reviewRequirements.requiredApproverCount} reviews from:\n` +
+                    "  users:" +
+                    (reviewRequirements.users
+                        ? "\n" + reviewRequirements.users.map((u) => ` - ${u}\n`)
+                        : " []\n") +
+                    "  teams:" +
+                    (reviewRequirements.teams
+                        ? "\n" + reviewRequirements.teams.map((t) => ` - ${t}\n`)
+                        : " []\n") +
+                    `But only found ${count} approvals: ` +
+                    `[${relevantApprovals.join(", ")}].`);
+                approved = false;
+            }
+            else {
+                infoLog(`${prefix} review requirements met.`);
+            }
+        }
+    }
+    return approved;
+}
+exports.check = check;
 async function run() {
     try {
         const authToken = core.getInput("github-token");
@@ -78,29 +121,7 @@ async function run() {
             .filter((review) => review.state === "APPROVED")
             .filter((review) => review.user !== null)
             .map((review) => review.user.login); // eslint-disable-line @typescript-eslint/no-non-null-assertion
-        let approved = true;
-        for (const prefix in reviewersConfig.reviewers) {
-            // find files that match the rule
-            const affectedFiles = modifiedFilepaths.filter((file) => file.startsWith(prefix));
-            if (affectedFiles.length > 0) {
-                // evaluate rule
-                const reviewRequirements = reviewersConfig.reviewers[prefix];
-                const relevantApprovals = approvals.filter((user) => reviewRequirements.users.find((u) => u === user));
-                const count = relevantApprovals.length;
-                if (count < reviewRequirements.requiredApproverCount) {
-                    core.warning("Modified Files:\n" +
-                        affectedFiles.map((f) => ` - ${f}\n`) +
-                        `Require ${reviewRequirements.requiredApproverCount} reviews from:\n` +
-                        reviewRequirements.users.map((u) => ` - ${u}\n`) +
-                        `But only found ${count} approvals: ` +
-                        `[${relevantApprovals.join(", ")}].`);
-                    approved = false;
-                }
-                else {
-                    core.info(`${prefix} review requirements met.`);
-                }
-            }
-        }
+        const approved = check(reviewersConfig, modifiedFilepaths, approvals, core.info, core.warning);
         if (!approved) {
             core.setFailed("Missing required approvals.");
             return;

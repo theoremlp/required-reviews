@@ -9,9 +9,23 @@ to a list of users and a required review count. e.g.:
 
 ```json
 {
+    "teams": {
+      "everyone": {
+        "description": "a team that contains all users",
+        "users": [
+          "markelliot"
+        ]
+      }
+    },
     "reviewers": {
         ".github/" {
+            "description": "Require markelliot's approval on all changes to .github",
             "users": ["markelliot"],
+            "requiredApproverCount": 1
+        },
+        "": {
+            "description": "Require at least one approval on every file from the everyone team",
+            "teams": ["everyone"],
             "requiredApproverCount": 1
         }
     }
