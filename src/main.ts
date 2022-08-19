@@ -1,10 +1,13 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 import { Context } from "@actions/github/lib/context";
+import { GitHub } from "@actions/github/lib/utils";
 import type {
   PullRequest,
   PullRequestReviewEvent,
 } from "@octokit/webhooks-types";
+
+type GitHubApi = InstanceType<typeof GitHub>;
 
 interface TeamConfiguration {
   description?: string;
@@ -18,11 +21,32 @@ interface ReviewerConfiguration {
   requiredApproverCount: number;
 }
 
+interface OverrideCriteria {
+  description?: string;
+  onlyModifiedByUsers?: string[];
+  onlyModifiedFileRegExs?: string[];
+}
+
 interface Reviewers {
   /** a map of team name to team members */
   teams?: { [key: string]: TeamConfiguration };
   /** a map of path prefix to review requirements */
   reviewers: { [key: string]: ReviewerConfiguration };
+  /** criteria that will overrule review requirements */
+  overrides?: OverrideCriteria[];
+}
+
+async function loadConfig(octokit: GitHubApi, context: Context) {
+  // load configuration, note that this call behaves differently than we expect with file sizes larger than 1MB
+  const reviewersRequest = await octokit.rest.repos.getContent({
+    ...context.repo,
+    path: ".github/reviewers.json",
+  });
+  if (!("content" in reviewersRequest.data)) {
+    return undefined;
+  }
+  const decodedContent = atob(reviewersRequest.data.content.replace(/\n/g, ""));
+  return JSON.parse(decodedContent) as Reviewers;
 }
 
 function getPrNumber(context: Context): number | undefined {
@@ -44,6 +68,49 @@ function getPossibleApprovers(
     .map((team) => teams[team].users)
     .reduce((left, right) => [...left, ...right], []);
   return new Set([...namedUsers, ...usersFromAllNamedTeams]);
+}
+
+// note that this will truncate at >3000 files
+async function getModifiedFilepaths(
+  octokit: GitHubApi,
+  context: Context,
+  prNumber: number
+) {
+  const allPrFiles = await octokit.rest.pulls.listFiles({
+    ...context.repo,
+    pull_number: prNumber,
+  });
+  return allPrFiles.data.map((file) => file.filename);
+}
+
+async function getApprovals(
+  octokit: GitHubApi,
+  context: Context,
+  prNumber: number
+) {
+  const prReviews = await octokit.rest.pulls.listReviews({
+    ...context.repo,
+    pull_number: prNumber,
+  });
+
+  return prReviews.data
+    .filter((review) => review.state === "APPROVED")
+    .filter((review) => review.user !== null)
+    .map((review) => review.user!.login); // eslint-disable-line @typescript-eslint/no-non-null-assertion
+}
+
+async function getCommiters(
+  octokit: GitHubApi,
+  context: Context,
+  prNumber: number
+) {
+  // capped at 250 commits
+  const commits = await octokit.rest.pulls.listCommits({
+    ...context.repo,
+    pull_number: prNumber,
+  });
+
+  return commits.data.map((commit) => commit.committer?.login);
 }
 
 export function check(
@@ -98,6 +165,35 @@ export function check(
   return approved;
 }
 
+/** returns true if at least one OverrideCriteria is satisfied. */
+export function checkOverride(
+  overrides: OverrideCriteria[],
+  modifiedFilePaths: string[],
+  modifiedByUsers: (string | undefined)[]
+) {
+  return overrides.some((crit) => {
+    let maybe = true;
+    if (crit.onlyModifiedByUsers !== undefined) {
+      const testSet = new Set(crit.onlyModifiedByUsers);
+      maybe =
+        maybe &&
+        modifiedByUsers.every(
+          (user) => user !== undefined && testSet.has(user)
+        );
+    }
+    if (crit.onlyModifiedFileRegExs !== undefined) {
+      maybe =
+        maybe &&
+        modifiedFilePaths.every((modifiedFile) =>
+          crit.onlyModifiedFileRegExs?.some((pattern) =>
+            new RegExp(pattern).test(modifiedFile)
+          )
+        );
+    }
+    return maybe;
+  });
+}
+
 async function run(): Promise<void> {
   try {
     const authToken = core.getInput("github-token");
@@ -112,38 +208,19 @@ async function run(): Promise<void> {
       return;
     }
 
-    // load configuration, note that this call behaves differently with file sizes larger than 1MB
-    const reviewersRequest = await octokit.rest.repos.getContent({
-      ...context.repo,
-      path: ".github/reviewers.json",
-    });
-    if (!("content" in reviewersRequest.data)) {
+    const reviewersConfig = await loadConfig(octokit, context);
+    if (!reviewersConfig) {
       core.setFailed("Unable to retrieve .github/reviewers.json");
       return;
     }
-    const decodedContent = atob(
-      reviewersRequest.data.content.replace(/\n/g, "")
+
+    const modifiedFilepaths = await getModifiedFilepaths(
+      octokit,
+      context,
+      prNumber
     );
-    const reviewersConfig = JSON.parse(decodedContent) as Reviewers;
-
-    // note that this will truncate at >3000 files
-    const allPrFiles = await octokit.rest.pulls.listFiles({
-      ...context.repo,
-      pull_number: prNumber,
-    });
-
-    const modifiedFilepaths = allPrFiles.data.map((file) => file.filename);
-
-    // actual reviews
-    const prReviews = await octokit.rest.pulls.listReviews({
-      ...context.repo,
-      pull_number: prNumber,
-    });
-
-    const approvals = prReviews.data
-      .filter((review) => review.state === "APPROVED")
-      .filter((review) => review.user !== null)
-      .map((review) => review.user!.login); // eslint-disable-line @typescript-eslint/no-non-null-assertion
+    const approvals = await getApprovals(octokit, context, prNumber);
+    const committers = await getCommiters(octokit, context, prNumber);
 
     const approved = check(
       reviewersConfig,
@@ -153,13 +230,21 @@ async function run(): Promise<void> {
       core.warning
     );
     if (!approved) {
-      core.setFailed("Missing required approvals.");
-      return;
+      const override =
+        reviewersConfig.overrides !== undefined &&
+        checkOverride(reviewersConfig.overrides, modifiedFilepaths, committers);
+      if (!override) {
+        core.setFailed("Missing required approvals.");
+        return;
+      }
+      core.info("Missing required approvals but allowing due to override.");
     }
     // pass
     core.info("All review requirements have been met");
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message);
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    }
   }
 }
 

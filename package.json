@@ -7,8 +7,8 @@
   "scripts": {
     "package": "yarn build && yarn ncc build --source-map",
     "build": "yarn && yarn lint && yarn tsc",
-    "format": "eslint 'src/' --fix && prettier --write 'src/**/*.{js,jsx,css,json,md,scss,ts,tsx}'",
-    "lint": "eslint 'src/' && prettier --check 'src/**/*.{js,jsx,css,json,md,scss,ts,tsx}'",
+    "format": "yarn eslint 'src/' --fix && prettier --write 'src/**/*.{js,jsx,css,json,md,scss,ts,tsx}'",
+    "lint": "yarn eslint 'src/' && prettier --check 'src/**/*.{js,jsx,css,json,md,scss,ts,tsx}'",
     "test": "yarn jest"
   },
   "devDependencies": {
