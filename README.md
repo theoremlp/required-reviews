@@ -28,7 +28,16 @@ to a list of users and a required review count. e.g.:
             "teams": ["everyone"],
             "requiredApproverCount": 1
         }
-    }
+    },
+    "overrides": [
+      {
+        "description": "Allow user 'bot' to make changes to yarn.lock",
+        "modifiedByUsers": ["bot"],
+        "modifiedFileRegExs": [
+          "^yarn.lock$"
+        ]
+      }
+    ]
 }
 ```
 
