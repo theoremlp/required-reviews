@@ -59,4 +59,11 @@ jobs:
         uses: theoremlp/required-reviews@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: post a review on the PR instead of failing the task when requirements haven't been satisfied
+          # post-review: true
 ```
+
+Note that the post-review option will cause the task to succed, and should be used in concert with:
+
+- requiring a review from the user that runs the action (controlled via the secret passed to the task)
+- requiring the task runs to completion (so that reviews are required for each commit)
