@@ -7,7 +7,7 @@ inputs:
     description: A valid GitHub token
   config-ref:
     required: false
-    description: Load the .github/reviewers.json config from here. Set to `${{ github.event.pull_request.base.ref }}` to use the base branch. When missing, the default branch will be used.
+    description: Load the .github/reviewers.json config from here. Use `github.event.pull_request.base.ref` for base branch. When missing, the default branch will be used.
 runs:
   using: "node16"
   main: "dist/index.js"
