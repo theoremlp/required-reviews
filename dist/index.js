@@ -75,10 +75,20 @@ async function getApprovals(octokit, context, prNumber) {
         ...context.repo,
         pull_number: prNumber,
     });
-    return prReviews.data
-        .filter((review) => review.state === "APPROVED")
-        .filter((review) => review.user !== null)
-        .map((review) => review.user.login); // eslint-disable-line @typescript-eslint/no-non-null-assertion
+    const reviewStatus = {};
+    // The reviews are in chronological order so we just need to use the latest state
+    prReviews.data.forEach((review) => {
+        // COMMENTED reviews do not affect the approval state
+        if (review.user !== null && review.state != "COMMENTED") {
+            reviewStatus[review.user.login] = review.state;
+        }
+    });
+    const approvals = [];
+    for (const login in reviewStatus) {
+        if (reviewStatus[login] == "APPROVED")
+            approvals.push(login);
+    }
+    return approvals;
 }
 async function getCommiters(octokit, context, prNumber) {
     // capped at 250 commits
@@ -148,6 +158,7 @@ exports.checkOverride = checkOverride;
 async function run() {
     try {
         const authToken = core.getInput("github-token");
+        const postReview = core.getInput("post-review") === "true";
         const octokit = github.getOctokit(authToken);
         const context = github.context;
         const prNumber = getPrNumber(context);
@@ -168,12 +179,31 @@ async function run() {
             const override = reviewersConfig.overrides !== undefined &&
                 checkOverride(reviewersConfig.overrides, modifiedFilepaths, committers);
             if (!override) {
-                core.setFailed("Missing required approvals.");
+                if (postReview) {
+                    await octokit.rest.pulls.createReview({
+                        ...context.repo,
+                        pull_number: prNumber,
+                        event: "REQUEST_CHANGES",
+                        body: "Missing required reviewers",
+                    });
+                }
+                else {
+                    core.setFailed("Missing required approvals.");
+                }
                 return;
             }
+            // drop through
             core.info("Missing required approvals but allowing due to override.");
         }
         // pass
+        if (postReview) {
+            await octokit.rest.pulls.createReview({
+                ...context.repo,
+                pull_number: prNumber,
+                event: "APPROVE",
+                body: "All review requirements have been met",
+            });
+        }
         core.info("All review requirements have been met");
     }
     catch (error) {

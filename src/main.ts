@@ -93,10 +93,21 @@ async function getApprovals(
     pull_number: prNumber,
   });
 
-  return prReviews.data
-    .filter((review) => review.state === "APPROVED")
-    .filter((review) => review.user !== null)
-    .map((review) => review.user!.login); // eslint-disable-line @typescript-eslint/no-non-null-assertion
+  const reviewStatus: { [key: string]: string } = {};
+  // The reviews are in chronological order so we just need to use the latest state
+  prReviews.data.forEach((review) => {
+    // COMMENTED reviews do not affect the approval state
+    if (review.user !== null && review.state != "COMMENTED") {
+      reviewStatus[review.user.login] = review.state;
+    }
+  });
+
+  const approvals = [];
+  for (const login in reviewStatus) {
+    if (reviewStatus[login] == "APPROVED") approvals.push(login);
+  }
+
+  return approvals;
 }
 
 async function getCommiters(
