@@ -36,10 +36,15 @@ interface Reviewers {
   overrides?: OverrideCriteria[];
 }
 
-async function loadConfig(octokit: GitHubApi, context: Context) {
+async function loadConfig(
+  octokit: GitHubApi,
+  context: Context,
+  configRef: string
+) {
   // load configuration, note that this call behaves differently than we expect with file sizes larger than 1MB
   const reviewersRequest = await octokit.rest.repos.getContent({
     ...context.repo,
+    ref: configRef != "" ? configRef : undefined,
     path: ".github/reviewers.json",
   });
   if (!("content" in reviewersRequest.data)) {
@@ -197,6 +202,7 @@ export function checkOverride(
 async function run(): Promise<void> {
   try {
     const authToken = core.getInput("github-token");
+    const configRef = core.getInput("config-ref");
     const postReview = core.getInput("post-review") === "true";
     const octokit = github.getOctokit(authToken);
     const context = github.context;
@@ -209,7 +215,7 @@ async function run(): Promise<void> {
       return;
     }
 
-    const reviewersConfig = await loadConfig(octokit, context);
+    const reviewersConfig = await loadConfig(octokit, context, configRef);
     if (!reviewersConfig) {
       core.setFailed("Unable to retrieve .github/reviewers.json");
       return;

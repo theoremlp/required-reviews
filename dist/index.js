@@ -33,10 +33,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.checkOverride = exports.check = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
-async function loadConfig(octokit, context) {
+async function loadConfig(octokit, context, configRef) {
     // load configuration, note that this call behaves differently than we expect with file sizes larger than 1MB
     const reviewersRequest = await octokit.rest.repos.getContent({
         ...context.repo,
+        ref: configRef != "" ? configRef : undefined,
         path: ".github/reviewers.json",
     });
     if (!("content" in reviewersRequest.data)) {
@@ -148,6 +149,8 @@ exports.checkOverride = checkOverride;
 async function run() {
     try {
         const authToken = core.getInput("github-token");
+        const configRef = core.getInput("config-ref");
+        const postReview = core.getInput("post-review") === "true";
         const octokit = github.getOctokit(authToken);
         const context = github.context;
         const prNumber = getPrNumber(context);
@@ -155,7 +158,7 @@ async function run() {
             core.setFailed(`Action invoked on unexpected event type '${github.context.eventName}'`);
             return;
         }
-        const reviewersConfig = await loadConfig(octokit, context);
+        const reviewersConfig = await loadConfig(octokit, context, configRef);
         if (!reviewersConfig) {
             core.setFailed("Unable to retrieve .github/reviewers.json");
             return;
@@ -168,12 +171,31 @@ async function run() {
             const override = reviewersConfig.overrides !== undefined &&
                 checkOverride(reviewersConfig.overrides, modifiedFilepaths, committers);
             if (!override) {
-                core.setFailed("Missing required approvals.");
+                if (postReview) {
+                    await octokit.rest.pulls.createReview({
+                        ...context.repo,
+                        pull_number: prNumber,
+                        event: "REQUEST_CHANGES",
+                        body: "Missing required reviewers",
+                    });
+                }
+                else {
+                    core.setFailed("Missing required approvals.");
+                }
                 return;
             }
+            // drop through
             core.info("Missing required approvals but allowing due to override.");
         }
         // pass
+        if (postReview) {
+            await octokit.rest.pulls.createReview({
+                ...context.repo,
+                pull_number: prNumber,
+                event: "APPROVE",
+                body: "All review requirements have been met",
+            });
+        }
         core.info("All review requirements have been met");
     }
     catch (error) {
