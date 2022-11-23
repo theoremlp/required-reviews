@@ -137,24 +137,29 @@ function check(reviewersConfig, modifiedFilepaths, approvals, infoLog, warnLog) 
 }
 exports.check = check;
 /** returns true if at least one OverrideCriteria is satisfied. */
-function checkOverride(overrides, modifiedFilePaths, modifiedByUsers, infoLog) {
+function checkOverride(overrides, modifiedFilePaths, modifiedByUsers, infoLog, warnLog) {
     return overrides.some((crit) => {
+        if (crit.onlyModifiedByUsers === undefined &&
+            crit.onlyModifiedFileRegExs === undefined) {
+            warnLog(`Ignoring override due to absent override criteria: ${crit.description}`);
+            return false;
+        }
         let wasOnlyModifiedByNamedUsers = true;
-        let hasOnlyModifiedFileRegeExs = true;
+        let hasOnlyModifiedFileRegExs = true;
         if (crit.onlyModifiedByUsers !== undefined) {
             const testSet = new Set(crit.onlyModifiedByUsers);
             wasOnlyModifiedByNamedUsers = modifiedByUsers.every((user) => user !== undefined && testSet.has(user));
         }
         if (crit.onlyModifiedFileRegExs !== undefined) {
-            hasOnlyModifiedFileRegeExs = modifiedFilePaths.every((modifiedFile) => {
+            hasOnlyModifiedFileRegExs = modifiedFilePaths.every((modifiedFile) => {
                 var _a;
                 return (_a = crit.onlyModifiedFileRegExs) === null || _a === void 0 ? void 0 : _a.some((pattern) => new RegExp(pattern).test(modifiedFile));
             });
         }
-        infoLog("Checking overrides:\n" +
+        infoLog(`Override: ${crit.description}:\n` +
             ` - only named users          : ${wasOnlyModifiedByNamedUsers}\n` +
-            ` - only files matching regex : ${hasOnlyModifiedFileRegeExs}`);
-        return wasOnlyModifiedByNamedUsers && hasOnlyModifiedFileRegeExs;
+            ` - only files matching regex : ${hasOnlyModifiedFileRegExs}`);
+        return wasOnlyModifiedByNamedUsers && hasOnlyModifiedFileRegExs;
     });
 }
 exports.checkOverride = checkOverride;
@@ -179,7 +184,7 @@ async function run() {
         const committers = await getCommiters(octokit, context, prNumber);
         const approved = check(reviewersConfig, modifiedFilepaths, approvals, core.info, core.warning);
         const override = reviewersConfig.overrides !== undefined &&
-            checkOverride(reviewersConfig.overrides, modifiedFilepaths, committers, core.info);
+            checkOverride(reviewersConfig.overrides, modifiedFilepaths, committers, core.info, core.warning);
         const allow = approved || override;
         if (postReview) {
             const lastReview = await getLastReview(octokit, context, prNumber);
