@@ -88,6 +88,19 @@ async function getCommiters(octokit, context, prNumber) {
     });
     return commits.data.map((commit) => { var _a; return (_a = commit.committer) === null || _a === void 0 ? void 0 : _a.login; });
 }
+/** Returns the last review by the authenticated user or undefined. */
+async function getLastReview(octokit, context, prNumber) {
+    const currentUserLogin = await (await octokit.rest.users.getAuthenticated()).data.login;
+    const currentReviews = await octokit.rest.pulls.listReviews({
+        ...context.repo,
+        pull_number: prNumber,
+    });
+    const lastReview = currentReviews.data
+        .filter((rev) => { var _a; return ((_a = rev.user) === null || _a === void 0 ? void 0 : _a.login) === currentUserLogin; })
+        .slice(-1)
+        .pop();
+    return lastReview;
+}
 function check(reviewersConfig, modifiedFilepaths, approvals, infoLog, warnLog) {
     let approved = true;
     for (const prefix in reviewersConfig.reviewers) {
@@ -105,11 +118,11 @@ function check(reviewersConfig, modifiedFilepaths, approvals, infoLog, warnLog) 
                     `Require ${reviewRequirements.requiredApproverCount} reviews from:\n` +
                     "  users:" +
                     (reviewRequirements.users
-                        ? "\n" + reviewRequirements.users.map((u) => ` - ${u}\n`)
+                        ? "\n" + reviewRequirements.users.map((u) => `   - ${u}\n`)
                         : " []\n") +
                     "  teams:" +
                     (reviewRequirements.teams
-                        ? "\n" + reviewRequirements.teams.map((t) => ` - ${t}\n`)
+                        ? "\n" + reviewRequirements.teams.map((t) => `   - ${t}\n`)
                         : " []\n") +
                     `But only found ${count} approvals: ` +
                     `[${relevantApprovals.join(", ")}].`);
@@ -124,24 +137,24 @@ function check(reviewersConfig, modifiedFilepaths, approvals, infoLog, warnLog) 
 }
 exports.check = check;
 /** returns true if at least one OverrideCriteria is satisfied. */
-function checkOverride(overrides, modifiedFilePaths, modifiedByUsers) {
+function checkOverride(overrides, modifiedFilePaths, modifiedByUsers, infoLog) {
     return overrides.some((crit) => {
-        let maybe = true;
+        let wasOnlyModifiedByNamedUsers = true;
+        let hasOnlyModifiedFileRegeExs = true;
         if (crit.onlyModifiedByUsers !== undefined) {
             const testSet = new Set(crit.onlyModifiedByUsers);
-            maybe =
-                maybe &&
-                    modifiedByUsers.every((user) => user !== undefined && testSet.has(user));
+            wasOnlyModifiedByNamedUsers = modifiedByUsers.every((user) => user !== undefined && testSet.has(user));
         }
         if (crit.onlyModifiedFileRegExs !== undefined) {
-            maybe =
-                maybe &&
-                    modifiedFilePaths.every((modifiedFile) => {
-                        var _a;
-                        return (_a = crit.onlyModifiedFileRegExs) === null || _a === void 0 ? void 0 : _a.some((pattern) => new RegExp(pattern).test(modifiedFile));
-                    });
+            hasOnlyModifiedFileRegeExs = modifiedFilePaths.every((modifiedFile) => {
+                var _a;
+                return (_a = crit.onlyModifiedFileRegExs) === null || _a === void 0 ? void 0 : _a.some((pattern) => new RegExp(pattern).test(modifiedFile));
+            });
         }
-        return maybe;
+        infoLog("Checking overrides:\n" +
+            ` - only named users          : ${wasOnlyModifiedByNamedUsers}\n` +
+            ` - only files matching regex : ${hasOnlyModifiedFileRegeExs}`);
+        return wasOnlyModifiedByNamedUsers && hasOnlyModifiedFileRegeExs;
     });
 }
 exports.checkOverride = checkOverride;
@@ -165,40 +178,48 @@ async function run() {
         const approvals = await getApprovals(octokit, context, prNumber);
         const committers = await getCommiters(octokit, context, prNumber);
         const approved = check(reviewersConfig, modifiedFilepaths, approvals, core.info, core.warning);
-        if (!approved) {
-            const override = reviewersConfig.overrides !== undefined &&
-                checkOverride(reviewersConfig.overrides, modifiedFilepaths, committers);
-            if (!override) {
-                if (postReview) {
+        const override = reviewersConfig.overrides !== undefined &&
+            checkOverride(reviewersConfig.overrides, modifiedFilepaths, committers, core.info);
+        const allow = approved || override;
+        if (postReview) {
+            const lastReview = await getLastReview(octokit, context, prNumber);
+            if (allow) {
+                if (lastReview === undefined || lastReview.state !== "APPROVED") {
+                    await octokit.rest.pulls.createReview({
+                        ...context.repo,
+                        pull_number: prNumber,
+                        event: "APPROVE",
+                        body: "All review requirements have been met.",
+                    });
+                }
+            }
+            else {
+                if (lastReview === undefined ||
+                    lastReview.state !== "CHANGES_REQUESTED") {
                     await octokit.rest.pulls.createReview({
                         ...context.repo,
                         pull_number: prNumber,
                         event: "REQUEST_CHANGES",
-                        body: "Missing required reviewers",
+                        body: "Missing required reviewers.",
                     });
                 }
-                else {
-                    core.setFailed("Missing required approvals.");
-                }
-                return;
             }
-            // drop through
-            core.info("Missing required approvals but allowing due to override.");
         }
-        // pass
-        if (postReview) {
-            await octokit.rest.pulls.createReview({
-                ...context.repo,
-                pull_number: prNumber,
-                event: "APPROVE",
-                body: "All review requirements have been met",
-            });
+        else {
+            if (approved) {
+                core.info("All review requirements have been met");
+            }
+            else if (override) {
+                core.info("Missing required approvals but allowing due to override.");
+            }
+            else {
+                core.setFailed("Missing required approvals.");
+            }
         }
-        core.info("All review requirements have been met");
     }
     catch (error) {
         if (error instanceof Error) {
-            core.setFailed(error.message);
+            core.setFailed(error);
         }
     }
 }
