@@ -190,11 +190,22 @@ export function checkOverride(
   overrides: OverrideCriteria[],
   modifiedFilePaths: string[],
   modifiedByUsers: (string | undefined)[],
-  infoLog: (message: string) => void
+  infoLog: (message: string) => void,
+  warnLog: (message: string) => void
 ) {
   return overrides.some((crit) => {
+    if (
+      crit.onlyModifiedByUsers === undefined &&
+      crit.onlyModifiedFileRegExs === undefined
+    ) {
+      warnLog(
+        `Ignoring override due to absent override criteria: ${crit.description}`
+      );
+      return false;
+    }
+
     let wasOnlyModifiedByNamedUsers = true;
-    let hasOnlyModifiedFileRegeExs = true;
+    let hasOnlyModifiedFileRegExs = true;
     if (crit.onlyModifiedByUsers !== undefined) {
       const testSet = new Set(crit.onlyModifiedByUsers);
       wasOnlyModifiedByNamedUsers = modifiedByUsers.every(
@@ -202,18 +213,18 @@ export function checkOverride(
       );
     }
     if (crit.onlyModifiedFileRegExs !== undefined) {
-      hasOnlyModifiedFileRegeExs = modifiedFilePaths.every((modifiedFile) =>
+      hasOnlyModifiedFileRegExs = modifiedFilePaths.every((modifiedFile) =>
         crit.onlyModifiedFileRegExs?.some((pattern) =>
           new RegExp(pattern).test(modifiedFile)
         )
       );
     }
     infoLog(
-      "Checking overrides:\n" +
+      `Override: ${crit.description}:\n` +
         ` - only named users          : ${wasOnlyModifiedByNamedUsers}\n` +
-        ` - only files matching regex : ${hasOnlyModifiedFileRegeExs}`
+        ` - only files matching regex : ${hasOnlyModifiedFileRegExs}`
     );
-    return wasOnlyModifiedByNamedUsers && hasOnlyModifiedFileRegeExs;
+    return wasOnlyModifiedByNamedUsers && hasOnlyModifiedFileRegExs;
   });
 }
 
@@ -259,7 +270,8 @@ async function run(): Promise<void> {
         reviewersConfig.overrides,
         modifiedFilepaths,
         committers,
-        core.info
+        core.info,
+        core.warning
       );
 
     const allow = approved || override;

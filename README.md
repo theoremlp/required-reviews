@@ -32,8 +32,8 @@ to a list of users and a required review count. e.g.:
     "overrides": [
       {
         "description": "Allow user 'bot' to make changes to yarn.lock",
-        "modifiedByUsers": ["bot"],
-        "modifiedFileRegExs": [
+        "onlyModifiedByUsers": ["bot"],
+        "onlyModifiedFileRegExs": [
           "^yarn.lock$"
         ]
       }
