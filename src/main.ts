@@ -221,7 +221,9 @@ export function checkOverride(
     }
     infoLog(
       `Override: ${crit.description}:\n` +
-        ` - only named users          : ${wasOnlyModifiedByNamedUsers}\n` +
+        ` - only named users          : ${wasOnlyModifiedByNamedUsers} (${modifiedByUsers.join(
+          ", "
+        )})\n` +
         ` - only files matching regex : ${hasOnlyModifiedFileRegExs}`
     );
     return wasOnlyModifiedByNamedUsers && hasOnlyModifiedFileRegExs;
