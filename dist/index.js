@@ -86,7 +86,7 @@ async function getCommiters(octokit, context, prNumber) {
         ...context.repo,
         pull_number: prNumber,
     });
-    return commits.data.map((commit) => { var _a; return (_a = commit.committer) === null || _a === void 0 ? void 0 : _a.login; });
+    return Array.from(new Set(commits.data.map((commit) => { var _a; return (_a = commit.author) === null || _a === void 0 ? void 0 : _a.login; })).values());
 }
 /** Returns the last review by the authenticated user or undefined. */
 async function getLastReview(octokit, context, prNumber) {

@@ -110,7 +110,9 @@ async function getCommiters(
     pull_number: prNumber,
   });
 
-  return commits.data.map((commit) => commit.committer?.login);
+  return Array.from(
+    new Set(commits.data.map((commit) => commit.author?.login)).values()
+  );
 }
 
 /** Returns the last review by the authenticated user or undefined. */
