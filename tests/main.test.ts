@@ -1,4 +1,4 @@
-import { check, checkOverride } from "../src/main";
+import { check, checkOverride, getLastReviewApprovals } from "../src/main";
 
 const reviewers = {
   teams: {
@@ -38,6 +38,19 @@ const reviewers = {
 
 const info = (info: string) => console.log(`INFO: ${info}`);
 const warn = (warn: string) => console.log(`WARN: ${warn}`);
+
+describe("test utility functions", () => {
+  test("getLastReviewApprovals", () => {
+    expect(
+      getLastReviewApprovals([
+        { user: "a", state: "REQUESTED_CHANGES" },
+        { user: "a", state: "APPROVED" },
+        { user: "b", state: "APPROVED" },
+        { user: "b", state: "REQUESTED_CHANGES" },
+      ])
+    ).toEqual(["a"]);
+  });
+});
 
 describe("test check()", () => {
   test("empty files and empty approvals", () => {
