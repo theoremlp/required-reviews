@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: required-reviewers
-        uses: theoremlp/required-reviews@v1
+        uses: theoremlp/required-reviews@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # Optional: post a review on the PR instead of failing the task when requirements haven't been satisfied
