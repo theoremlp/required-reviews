@@ -169,6 +169,11 @@ export function check(
     );
 
     if (affectedFiles.length > 0) {
+      infoLog(
+        "Found affected files:\n" +
+          affectedFiles.map((f) => ` - ${f}`).join("\n")
+      );
+
       // evaluate rule
       const reviewRequirements = reviewersConfig.reviewers[prefix];
       const possibleApprovers = getPossibleApprovers(
@@ -183,23 +188,21 @@ export function check(
 
       if (count < reviewRequirements.requiredApproverCount) {
         warnLog(
-          "Modified Files:\n" +
-            affectedFiles.map((f) => ` - ${f}\n`) +
-            `Require ${reviewRequirements.requiredApproverCount} reviews from:\n` +
-            "  users:" +
+          `${prefix} modifications require ${reviewRequirements.requiredApproverCount} reviews from:\n` +
             (reviewRequirements.users
-              ? "\n" + reviewRequirements.users.map((u) => `   - ${u}\n`)
-              : " []\n") +
-            "  teams:" +
+              ? "  users:\n" +
+                reviewRequirements.users.map((u) => `   - ${u}`).join("\n")
+              : "") +
             (reviewRequirements.teams
-              ? "\n" + reviewRequirements.teams.map((t) => `   - ${t}\n`)
-              : " []\n") +
-            `But only found ${count} approvals: ` +
-            `[${relevantApprovals.join(", ")}].`
+              ? "  teams:\n" +
+                reviewRequirements.teams.map((t) => `   - ${t}`).join("\n")
+              : "") +
+            `But only found ${count} approvals` +
+            (count > 0 ? `(${relevantApprovals.join(", ")})` : "")
         );
         approved = false;
       } else {
-        infoLog(`${prefix} review requirements met.`);
+        infoLog(`${prefix} review requirements met`);
       }
     }
   }
@@ -232,6 +235,13 @@ export function checkOverride(
       wasOnlyModifiedByNamedUsers = modifiedByUsers.every(
         (user) => user !== undefined && testSet.has(user)
       );
+      infoLog(
+        `${
+          crit.description
+        }: only by named users: ${wasOnlyModifiedByNamedUsers} (${modifiedByUsers.join(
+          ", "
+        )})`
+      );
     }
     if (crit.onlyModifiedFileRegExs !== undefined) {
       hasOnlyModifiedFileRegExs = modifiedFilePaths.every((modifiedFile) =>
@@ -239,14 +249,10 @@ export function checkOverride(
           new RegExp(pattern).test(modifiedFile)
         )
       );
+      infoLog(
+        `${crit.description}: only files matching regex: ${hasOnlyModifiedFileRegExs}`
+      );
     }
-    infoLog(
-      `Override: ${crit.description}:\n` +
-        ` - only named users          : ${wasOnlyModifiedByNamedUsers} (${modifiedByUsers.join(
-          ", "
-        )})\n` +
-        ` - only files matching regex : ${hasOnlyModifiedFileRegExs}`
-    );
     return wasOnlyModifiedByNamedUsers && hasOnlyModifiedFileRegExs;
   });
 }
