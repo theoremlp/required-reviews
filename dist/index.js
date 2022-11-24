@@ -30,7 +30,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.checkOverride = exports.check = void 0;
+exports.checkOverride = exports.check = exports.getLastReviewApprovals = void 0;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 async function loadConfig(octokit, context) {
@@ -70,15 +70,26 @@ async function getModifiedFilepaths(octokit, context, prNumber) {
     });
     return allPrFiles.data.map((file) => file.filename);
 }
+/** Extracts the last review from the provided {user, state} list and filter to only approving users. */
+// visible for testing
+function getLastReviewApprovals(sparse) {
+    const lastReviewByUser = sparse.reduce((prev, curr) => {
+        prev[curr.user] = curr.state;
+        return prev;
+    }, {});
+    return Object.keys(lastReviewByUser).filter((key) => lastReviewByUser[key] === "APPROVED");
+}
+exports.getLastReviewApprovals = getLastReviewApprovals;
+/** Gets current approvals. */
 async function getApprovals(octokit, context, prNumber) {
+    // note this might eventually require some pagination
     const prReviews = await octokit.rest.pulls.listReviews({
         ...context.repo,
         pull_number: prNumber,
     });
-    return prReviews.data
-        .filter((review) => review.state === "APPROVED")
-        .filter((review) => review.user !== null)
-        .map((review) => review.user.login); // eslint-disable-line @typescript-eslint/no-non-null-assertion
+    // map to a sparse representaiton to make testing the reduction logic a bit easier
+    const sparse = prReviews.data.flatMap((review) => review.user !== null ? { user: review.user.login, state: review.state } : []);
+    return getLastReviewApprovals(sparse);
 }
 async function getCommiters(octokit, context, prNumber) {
     // capped at 250 commits

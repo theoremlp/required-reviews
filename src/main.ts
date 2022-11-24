@@ -83,20 +83,39 @@ async function getModifiedFilepaths(
   return allPrFiles.data.map((file) => file.filename);
 }
 
+/** Extracts the last review from the provided {user, state} list and filter to only approving users. */
+// visible for testing
+export function getLastReviewApprovals(
+  sparse: { user: string; state: string }[]
+) {
+  const lastReviewByUser = sparse.reduce((prev, curr) => {
+    prev[curr.user] = curr.state;
+    return prev;
+  }, {} as { [key: string]: string });
+
+  return Object.keys(lastReviewByUser).filter(
+    (key) => lastReviewByUser[key] === "APPROVED"
+  );
+}
+
+/** Gets current approvals. */
 async function getApprovals(
   octokit: GitHubApi,
   context: Context,
   prNumber: number
 ) {
+  // note this might eventually require some pagination
   const prReviews = await octokit.rest.pulls.listReviews({
     ...context.repo,
     pull_number: prNumber,
   });
 
-  return prReviews.data
-    .filter((review) => review.state === "APPROVED")
-    .filter((review) => review.user !== null)
-    .map((review) => review.user!.login); // eslint-disable-line @typescript-eslint/no-non-null-assertion
+  // map to a sparse representaiton to make testing the reduction logic a bit easier
+  const sparse = prReviews.data.flatMap((review) =>
+    review.user !== null ? { user: review.user.login, state: review.state } : []
+  );
+
+  return getLastReviewApprovals(sparse);
 }
 
 async function getCommiters(
