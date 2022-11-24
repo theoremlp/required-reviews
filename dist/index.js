@@ -118,29 +118,29 @@ function check(reviewersConfig, modifiedFilepaths, approvals, infoLog, warnLog) 
         // find files that match the rule
         const affectedFiles = modifiedFilepaths.filter((file) => file.startsWith(prefix));
         if (affectedFiles.length > 0) {
+            infoLog("Found affected files:\n" +
+                affectedFiles.map((f) => ` - ${f}`).join("\n"));
             // evaluate rule
             const reviewRequirements = reviewersConfig.reviewers[prefix];
             const possibleApprovers = getPossibleApprovers(reviewersConfig.reviewers[prefix], reviewersConfig.teams || {});
             const relevantApprovals = approvals.filter((user) => possibleApprovers.has(user));
             const count = relevantApprovals.length;
             if (count < reviewRequirements.requiredApproverCount) {
-                warnLog("Modified Files:\n" +
-                    affectedFiles.map((f) => ` - ${f}\n`) +
-                    `Require ${reviewRequirements.requiredApproverCount} reviews from:\n` +
-                    "  users:" +
+                warnLog(`${prefix} modifications require ${reviewRequirements.requiredApproverCount} reviews from:\n` +
                     (reviewRequirements.users
-                        ? "\n" + reviewRequirements.users.map((u) => `   - ${u}\n`)
-                        : " []\n") +
-                    "  teams:" +
+                        ? "  users:\n" +
+                            reviewRequirements.users.map((u) => `   - ${u}`).join("\n")
+                        : "") +
                     (reviewRequirements.teams
-                        ? "\n" + reviewRequirements.teams.map((t) => `   - ${t}\n`)
-                        : " []\n") +
-                    `But only found ${count} approvals: ` +
-                    `[${relevantApprovals.join(", ")}].`);
+                        ? "  teams:\n" +
+                            reviewRequirements.teams.map((t) => `   - ${t}`).join("\n")
+                        : "") +
+                    `But only found ${count} approvals` +
+                    (count > 0 ? `(${relevantApprovals.join(", ")})` : ""));
                 approved = false;
             }
             else {
-                infoLog(`${prefix} review requirements met.`);
+                infoLog(`${prefix} review requirements met`);
             }
         }
     }
@@ -160,16 +160,15 @@ function checkOverride(overrides, modifiedFilePaths, modifiedByUsers, infoLog, w
         if (crit.onlyModifiedByUsers !== undefined) {
             const testSet = new Set(crit.onlyModifiedByUsers);
             wasOnlyModifiedByNamedUsers = modifiedByUsers.every((user) => user !== undefined && testSet.has(user));
+            infoLog(`${crit.description}: only by named users: ${wasOnlyModifiedByNamedUsers} (${modifiedByUsers.join(", ")})`);
         }
         if (crit.onlyModifiedFileRegExs !== undefined) {
             hasOnlyModifiedFileRegExs = modifiedFilePaths.every((modifiedFile) => {
                 var _a;
                 return (_a = crit.onlyModifiedFileRegExs) === null || _a === void 0 ? void 0 : _a.some((pattern) => new RegExp(pattern).test(modifiedFile));
             });
+            infoLog(`${crit.description}: only files matching regex: ${hasOnlyModifiedFileRegExs}`);
         }
-        infoLog(`Override: ${crit.description}:\n` +
-            ` - only named users          : ${wasOnlyModifiedByNamedUsers} (${modifiedByUsers.join(", ")})\n` +
-            ` - only files matching regex : ${hasOnlyModifiedFileRegExs}`);
         return wasOnlyModifiedByNamedUsers && hasOnlyModifiedFileRegExs;
     });
 }
