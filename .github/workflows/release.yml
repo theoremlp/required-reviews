@@ -40,4 +40,4 @@ jobs:
           COMMIT_EMAIL: "euler-theorem@users.noreply.github.com"
           MESSAGE: "Release of changes in ${{ github.event.push.after }}"
           BRANCH: release
-          TAG: v1
+          TAG: v2
