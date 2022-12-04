@@ -17,8 +17,6 @@ jobs:
           cache: "yarn"
       - name: Install
         run: yarn
-      - name: Lint
-        run: yarn lint
       - name: Build
         run: yarn package
       - name: Push to release branch
