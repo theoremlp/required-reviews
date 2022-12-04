@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
@@ -27,7 +28,7 @@ jobs:
 
           cp action.yml dist
           cp .gitignore dist
-          git checkout -B "${BRANCH}"
+          git checkout -f "${BRANCH}"
           mv dist/action.yml action.yml
           mv dist/.gitignore .gitignore
           git add -f dist action.yml
