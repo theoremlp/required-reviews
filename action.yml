@@ -1,0 +1,13 @@
+name: required-reviews
+description: Checks the required reviewers have approved a PR.
+author: theoremlp
+inputs:
+  github-token:
+    required: true
+    description: A valid GitHub token
+  post-review:
+    required: false
+    description: Whether to post a review on the PR
+runs:
+  using: "node16"
+  main: "dist/index.js"
