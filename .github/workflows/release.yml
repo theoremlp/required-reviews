@@ -1,0 +1,36 @@
+name: Release
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "yarn"
+      - name: Install
+        run: yarn
+      - name: Lint
+        run: yarn lint
+      - name: Build
+        run: yarn package
+      - name: Push to release branch
+        shell: bash
+        run: |
+          cp action.yml dist
+          git checkout -B "${BRANCH}"
+          mv dist/action.yml action.yml
+          git add dist action.yml
+          git commit --allow-empty -m "${MESSAGE}"
+          git push origin "${BRANCH}"
+          git tag -f -a "${TAG}" -m "${TAG}"
+          git push -f --tags
+        env:
+          MESSAGE: "Release of changes in ${{ github.event.push.head_commit.id }}"
+          BRANCH: release
+          TAG: v1
