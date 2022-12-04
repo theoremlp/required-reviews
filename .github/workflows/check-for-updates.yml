@@ -2,7 +2,7 @@ name: Update Deps
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: '0 10 * * *'
+    - cron: "0 10 * * *"
 
 jobs:
   check:
@@ -12,13 +12,12 @@ jobs:
         with:
           token: ${{ secrets.PUB_UPDATES_TOKEN }}
           fetch-depth: 0
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
-          node-version: '16'
-          cache: 'yarn'
+          node-version: "16"
+          cache: "yarn"
       - uses: markelliot/update-yarn-deps@v1
         with:
           push-to-repo-token: ${{ secrets.PUB_UPDATES_TOKEN }}
           commit-user: euler-theorem
           commit-email: euler-theorem@users.noreply.github.com
-
