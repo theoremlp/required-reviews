@@ -22,6 +22,9 @@ jobs:
       - name: Push to release branch
         shell: bash
         run: |
+          git config --global user.email "${COMMIT_EMAIL}"
+          git config --global user.name "${COMMIT_USER}"
+
           cp action.yml dist
           cp .gitignore dist
           git checkout -B "${BRANCH}"
@@ -33,6 +36,8 @@ jobs:
           git tag -f -a "${TAG}" -m "${TAG}"
           git push -f --tags
         env:
+          COMMIT_USER: releasebot
+          COMMIT_EMAIL: "euler-theorem@users.noreply.github.com"
           MESSAGE: "Release of changes in ${{ github.event.push.head_commit.id }}"
           BRANCH: release
           TAG: v1
