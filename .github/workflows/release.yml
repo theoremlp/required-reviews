@@ -38,6 +38,6 @@ jobs:
         env:
           COMMIT_USER: releasebot
           COMMIT_EMAIL: "euler-theorem@users.noreply.github.com"
-          MESSAGE: "Release of changes in ${{ github.event.push.after }}"
+          MESSAGE: "Release of changes in ${{ github.sha }}"
           BRANCH: release
           TAG: v2
