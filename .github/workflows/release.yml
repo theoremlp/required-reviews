@@ -5,7 +5,7 @@ on:
       - develop
 
 jobs:
-  check:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,9 +23,11 @@ jobs:
         shell: bash
         run: |
           cp action.yml dist
+          cp .gitignore dist
           git checkout -B "${BRANCH}"
           mv dist/action.yml action.yml
-          git add dist action.yml
+          mv dist/.gitignore .gitignore
+          git add -f dist action.yml
           git commit --allow-empty -m "${MESSAGE}"
           git push origin "${BRANCH}"
           git tag -f -a "${TAG}" -m "${TAG}"
