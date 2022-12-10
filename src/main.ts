@@ -110,7 +110,7 @@ async function getApprovals(
     pull_number: prNumber,
   });
 
-  // map to a sparse representaiton to make testing the reduction logic a bit easier
+  // map to a sparse representation to make testing the reduction logic a bit easier
   const sparse = prReviews.data.flatMap((review) =>
     review.user !== null ? { user: review.user.login, state: review.state } : []
   );
@@ -118,7 +118,7 @@ async function getApprovals(
   return getLastReviewApprovals(sparse);
 }
 
-async function getCommiters(
+async function getCommitters(
   octokit: GitHubApi,
   context: Context,
   prNumber: number
@@ -130,7 +130,11 @@ async function getCommiters(
   });
 
   return Array.from(
-    new Set(commits.data.map((commit) => commit.author?.login)).values()
+    new Set(
+      commits.data.flatMap((commit) =>
+        commit.author !== null ? [commit.author.login] : []
+      )
+    ).values()
   );
 }
 
@@ -158,10 +162,13 @@ export function check(
   reviewersConfig: Reviewers,
   modifiedFilepaths: string[],
   approvals: string[],
+  committers: string[],
   infoLog: (message: string) => void,
   warnLog: (message: string) => void
 ) {
   let approved = true;
+  const committersSet = new Set(committers);
+
   for (const prefix in reviewersConfig.reviewers) {
     // find files that match the rule
     const affectedFiles = modifiedFilepaths.filter((file) =>
@@ -181,8 +188,8 @@ export function check(
         reviewersConfig.teams || {}
       );
 
-      const relevantApprovals = approvals.filter((user) =>
-        possibleApprovers.has(user)
+      const relevantApprovals = approvals.filter(
+        (user) => possibleApprovers.has(user) && !committersSet.has(user)
       );
       const count = relevantApprovals.length;
 
@@ -191,11 +198,13 @@ export function check(
           `${prefix} modifications require ${reviewRequirements.requiredApproverCount} reviews from:\n` +
             (reviewRequirements.users
               ? "  users:\n" +
-                reviewRequirements.users.map((u) => `   - ${u}`).join("\n")
+                reviewRequirements.users.map((u) => `   - ${u}`).join("\n") +
+                "\n"
               : "") +
             (reviewRequirements.teams
               ? "  teams:\n" +
-                reviewRequirements.teams.map((t) => `   - ${t}`).join("\n")
+                reviewRequirements.teams.map((t) => `   - ${t}`).join("\n") +
+                "\n"
               : "") +
             `But only found ${count} approvals` +
             (count > 0 ? `(${relevantApprovals.join(", ")})` : "")
@@ -284,12 +293,13 @@ async function run(): Promise<void> {
       prNumber
     );
     const approvals = await getApprovals(octokit, context, prNumber);
-    const committers = await getCommiters(octokit, context, prNumber);
+    const committers = await getCommitters(octokit, context, prNumber);
 
     const approved = check(
       reviewersConfig,
       modifiedFilepaths,
       approvals,
+      committers,
       core.info,
       core.warning
     );

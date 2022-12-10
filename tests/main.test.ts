@@ -54,29 +54,39 @@ describe("test utility functions", () => {
 
 describe("test check()", () => {
   test("empty files and empty approvals", () => {
-    expect(check(reviewers, [], [], info, warn)).toBe(true);
-    expect(check(reviewers, [], ["anyone"], info, warn)).toBe(true);
-    expect(check(reviewers, [], ["user1"], info, warn)).toBe(true);
+    expect(check(reviewers, [], [], [], info, warn)).toBe(true);
+    expect(check(reviewers, [], ["anyone"], [], info, warn)).toBe(true);
+    expect(check(reviewers, [], ["user1"], [], info, warn)).toBe(true);
   });
 
   test("any file requires 'user1' reviewer", () => {
-    expect(check(reviewers, ["file"], [], info, warn)).toBe(false);
-    expect(check(reviewers, ["file"], ["anyone"], info, warn)).toBe(false);
-    expect(check(reviewers, ["file"], ["user1"], info, warn)).toBe(true);
+    expect(check(reviewers, ["file"], [], [], info, warn)).toBe(false);
+    expect(check(reviewers, ["file"], ["anyone"], [], info, warn)).toBe(false);
+    expect(check(reviewers, ["file"], ["user1"], [], info, warn)).toBe(true);
   });
 
   test("'.github/' files require 2 reviewers", () => {
     const files = [".github/foo"];
-    expect(check(reviewers, files, [], info, warn)).toBe(false);
-    expect(check(reviewers, files, ["user1"], info, warn)).toBe(false);
-    expect(check(reviewers, files, ["user1", "user2"], info, warn)).toBe(true);
+    expect(check(reviewers, files, [], [], info, warn)).toBe(false);
+    expect(check(reviewers, files, ["user1"], [], info, warn)).toBe(false);
+    expect(check(reviewers, files, ["user1", "user2"], [], info, warn)).toBe(
+      true
+    );
   });
 
   test("'team/' files require 2 reviewers", () => {
     const files = ["team/foo"];
-    expect(check(reviewers, files, [], info, warn)).toBe(false);
-    expect(check(reviewers, files, ["user1"], info, warn)).toBe(false);
-    expect(check(reviewers, files, ["user1", "user2"], info, warn)).toBe(true);
+    expect(check(reviewers, files, [], [], info, warn)).toBe(false);
+    expect(check(reviewers, files, ["user1"], [], info, warn)).toBe(false);
+    expect(check(reviewers, files, ["user1", "user2"], [], info, warn)).toBe(
+      true
+    );
+  });
+
+  test("do not allow committers on the PR to self-approve", () => {
+    expect(check(reviewers, ["file"], ["user1"], ["user1"], info, warn)).toBe(
+      false
+    );
   });
 });
 
