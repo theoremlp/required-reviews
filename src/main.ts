@@ -327,15 +327,13 @@ async function run(): Promise<void> {
           });
         }
       } else {
-        if (
-          lastReview === undefined ||
-          lastReview.state !== "CHANGES_REQUESTED"
-        ) {
-          await octokit.rest.pulls.createReview({
+        // dismiss prior approval by re-requesting
+        if (lastReview !== undefined && lastReview.state == "APPROVED") {
+          await octokit.rest.pulls.dismissReview({
             ...context.repo,
             pull_number: prNumber,
-            event: "REQUEST_CHANGES",
-            body: "Missing required reviewers.",
+            review_id: lastReview.id,
+            message: "Dismissing due to reviewer requirements.",
           });
         }
       }
