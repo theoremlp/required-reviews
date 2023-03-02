@@ -26,12 +26,12 @@ jobs:
           git config --global user.email "${COMMIT_EMAIL}"
           git config --global user.name "${COMMIT_USER}"
 
-          cp action.yml dist
-          cp .gitignore dist
+          git add -f action.yml .gitignore dist
+          git stash --staged
+
           git checkout -f "${BRANCH}"
-          mv dist/action.yml action.yml
-          mv dist/.gitignore .gitignore
-          git add -f dist action.yml
+
+          git checkout stash -- action.yml .gitignore dist
           git commit --allow-empty -m "${MESSAGE}"
           git push origin "${BRANCH}"
           git tag -f -a "${TAG}" -m "${TAG}"
