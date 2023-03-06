@@ -113,6 +113,10 @@ async function getLastReview(octokit, context, prNumber) {
     return lastReview;
 }
 function check(reviewersConfig, modifiedFilepaths, approvals, committers, infoLog, warnLog) {
+    // if there's no configured reviewers, do not approve
+    if (Object.keys(reviewersConfig.reviewers).length == 0) {
+        return false;
+    }
     let approved = true;
     const committersSet = new Set(committers);
     for (const prefix in reviewersConfig.reviewers) {
