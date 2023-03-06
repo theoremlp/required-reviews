@@ -328,7 +328,6 @@ async function run(): Promise<void> {
             ...context.repo,
             pull_number: prNumber,
             event: "APPROVE",
-            body: "All review requirements have been met.",
           });
         }
       } else {
