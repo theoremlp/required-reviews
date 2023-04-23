@@ -18,6 +18,7 @@ jobs:
           cache: "yarn"
       - uses: markelliot/update-yarn-deps@v1
         with:
+          primary-branch: main
           push-to-repo-token: ${{ secrets.PUB_UPDATES_TOKEN }}
           commit-user: euler-theorem
           commit-email: euler-theorem@users.noreply.github.com
