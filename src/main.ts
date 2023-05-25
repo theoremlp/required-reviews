@@ -143,13 +143,14 @@ async function getLastReview(
   octokit: GitHubApi,
   context: Context,
   prNumber: number,
-  reviewUser?: string
+  reviewUser: string
 ) {
   const currentUserLogin =
-    reviewUser ||
-    (await (
-      await octokit.rest.users.getAuthenticated()
-    ).data.login);
+    reviewUser !== ""
+      ? reviewUser
+      : await (
+          await octokit.rest.users.getAuthenticated()
+        ).data.login;
   const currentReviews = await octokit.rest.pulls.listReviews({
     ...context.repo,
     pull_number: prNumber,
@@ -277,8 +278,7 @@ export function checkOverride(
 async function run(): Promise<void> {
   try {
     const authToken = core.getInput("github-token");
-    const reviewUserIn = core.getInput("review-user");
-    const reviewUser = reviewUserIn === "" ? undefined : reviewUserIn;
+    const reviewUser = core.getInput("review-user");
     const postReview = core.getInput("post-review") === "true";
     const octokit = github.getOctokit(authToken);
     const context = github.context;
