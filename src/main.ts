@@ -142,11 +142,15 @@ async function getCommitters(
 async function getLastReview(
   octokit: GitHubApi,
   context: Context,
-  prNumber: number
+  prNumber: number,
+  reviewUser: string
 ) {
-  const currentUserLogin = await (
-    await octokit.rest.users.getAuthenticated()
-  ).data.login;
+  const currentUserLogin =
+    reviewUser !== ""
+      ? reviewUser
+      : await (
+          await octokit.rest.users.getAuthenticated()
+        ).data.login;
   const currentReviews = await octokit.rest.pulls.listReviews({
     ...context.repo,
     pull_number: prNumber,
@@ -274,6 +278,7 @@ export function checkOverride(
 async function run(): Promise<void> {
   try {
     const authToken = core.getInput("github-token");
+    const reviewUser = core.getInput("review-user");
     const postReview = core.getInput("post-review") === "true";
     const octokit = github.getOctokit(authToken);
     const context = github.context;
@@ -320,7 +325,12 @@ async function run(): Promise<void> {
 
     const allow = approved || override;
     if (postReview) {
-      const lastReview = await getLastReview(octokit, context, prNumber);
+      const lastReview = await getLastReview(
+        octokit,
+        context,
+        prNumber,
+        reviewUser
+      );
 
       if (allow) {
         if (lastReview === undefined || lastReview.state !== "APPROVED") {
