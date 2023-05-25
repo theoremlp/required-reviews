@@ -5,6 +5,9 @@ inputs:
   github-token:
     required: true
     description: A valid GitHub token
+  review-user:
+    required: false
+    description: The name of the reviewing user (set this if providing a GitHub App authn token)
   post-review:
     required: false
     description: Whether to post a review on the PR
