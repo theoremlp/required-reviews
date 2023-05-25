@@ -100,8 +100,10 @@ async function getCommitters(octokit, context, prNumber) {
     return Array.from(new Set(commits.data.flatMap((commit) => commit.author !== null ? [commit.author.login] : [])).values());
 }
 /** Returns the last review by the authenticated user or undefined. */
-async function getLastReview(octokit, context, prNumber) {
-    const currentUserLogin = await (await octokit.rest.users.getAuthenticated()).data.login;
+async function getLastReview(octokit, context, prNumber, reviewUser) {
+    const currentUserLogin = reviewUser !== ""
+        ? reviewUser
+        : await (await octokit.rest.users.getAuthenticated()).data.login;
     const currentReviews = await octokit.rest.pulls.listReviews({
         ...context.repo,
         pull_number: prNumber,
@@ -183,6 +185,7 @@ exports.checkOverride = checkOverride;
 async function run() {
     try {
         const authToken = core.getInput("github-token");
+        const reviewUser = core.getInput("review-user");
         const postReview = core.getInput("post-review") === "true";
         const octokit = github.getOctokit(authToken);
         const context = github.context;
@@ -204,7 +207,7 @@ async function run() {
             checkOverride(reviewersConfig.overrides, modifiedFilepaths, committers, core.info, core.warning);
         const allow = approved || override;
         if (postReview) {
-            const lastReview = await getLastReview(octokit, context, prNumber);
+            const lastReview = await getLastReview(octokit, context, prNumber, reviewUser);
             if (allow) {
                 if (lastReview === undefined || lastReview.state !== "APPROVED") {
                     await octokit.rest.pulls.createReview({
