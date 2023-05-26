@@ -118,7 +118,8 @@ async function getApprovals(
   return getLastReviewApprovals(sparse);
 }
 
-async function getCommitters(
+/** Returns a list of all committers and the prAuthor */
+async function getContributors(
   octokit: GitHubApi,
   context: Context,
   prNumber: number
@@ -129,13 +130,19 @@ async function getCommitters(
     pull_number: prNumber,
   });
 
-  return Array.from(
-    new Set(
-      commits.data.flatMap((commit) =>
-        commit.author !== null ? [commit.author.login] : []
-      )
-    ).values()
-  );
+  const committers = new Set(
+    commits.data.flatMap((commit) =>
+      commit.author !== null ? [commit.author.login] : []
+    )
+  ).values();
+
+  const pr = await octokit.rest.pulls.get({
+    ...context.repo,
+    pull_number: prNumber,
+  });
+  const prAuthor = new Set(pr.data.user ? [pr.data.user.login] : []);
+
+  return Array.from(new Set([...committers, ...prAuthor]));
 }
 
 /** Returns the last review by the authenticated user or undefined. */
@@ -166,7 +173,7 @@ export function check(
   reviewersConfig: Reviewers,
   modifiedFilepaths: string[],
   approvals: string[],
-  committers: string[],
+  contributors: string[],
   infoLog: (message: string) => void,
   warnLog: (message: string) => void
 ) {
@@ -176,7 +183,7 @@ export function check(
   }
 
   let approved = true;
-  const committersSet = new Set(committers);
+  const contributorsSet = new Set(contributors);
 
   for (const prefix in reviewersConfig.reviewers) {
     // find files that match the rule
@@ -198,7 +205,7 @@ export function check(
       );
 
       const relevantApprovals = approvals.filter(
-        (user) => possibleApprovers.has(user) && !committersSet.has(user)
+        (user) => possibleApprovers.has(user) && !contributorsSet.has(user)
       );
       const count = relevantApprovals.length;
 
@@ -231,7 +238,7 @@ export function check(
 export function checkOverride(
   overrides: OverrideCriteria[],
   modifiedFilePaths: string[],
-  modifiedByUsers: (string | undefined)[],
+  modifiedByUsers: string[],
   infoLog: (message: string) => void,
   warnLog: (message: string) => void
 ) {
@@ -250,8 +257,8 @@ export function checkOverride(
     let hasOnlyModifiedFileRegExs = true;
     if (crit.onlyModifiedByUsers !== undefined) {
       const testSet = new Set(crit.onlyModifiedByUsers);
-      wasOnlyModifiedByNamedUsers = modifiedByUsers.every(
-        (user) => user !== undefined && testSet.has(user)
+      wasOnlyModifiedByNamedUsers = modifiedByUsers.every((user) =>
+        testSet.has(user)
       );
       infoLog(
         `${
@@ -303,13 +310,13 @@ async function run(): Promise<void> {
       prNumber
     );
     const approvals = await getApprovals(octokit, context, prNumber);
-    const committers = await getCommitters(octokit, context, prNumber);
+    const contributors = await getContributors(octokit, context, prNumber);
 
     const approved = check(
       reviewersConfig,
       modifiedFilepaths,
       approvals,
-      committers,
+      contributors,
       core.info,
       core.warning
     );
@@ -318,7 +325,7 @@ async function run(): Promise<void> {
       checkOverride(
         reviewersConfig.overrides,
         modifiedFilepaths,
-        committers,
+        contributors,
         core.info,
         core.warning
       );
