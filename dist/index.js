@@ -91,13 +91,20 @@ async function getApprovals(octokit, context, prNumber) {
     const sparse = prReviews.data.flatMap((review) => review.user !== null ? { user: review.user.login, state: review.state } : []);
     return getLastReviewApprovals(sparse);
 }
-async function getCommitters(octokit, context, prNumber) {
+/** Returns a list of all committers and the prAuthor */
+async function getContributors(octokit, context, prNumber) {
     // capped at 250 commits
     const commits = await octokit.rest.pulls.listCommits({
         ...context.repo,
         pull_number: prNumber,
     });
-    return Array.from(new Set(commits.data.flatMap((commit) => commit.author !== null ? [commit.author.login] : [])).values());
+    const committers = new Set(commits.data.flatMap((commit) => commit.author !== null ? [commit.author.login] : [])).values();
+    const pr = await octokit.rest.pulls.get({
+        ...context.repo,
+        pull_number: prNumber,
+    });
+    const prAuthor = new Set(pr.data.user ? [pr.data.user.login] : []);
+    return Array.from(new Set([...committers, ...prAuthor]));
 }
 /** Returns the last review by the authenticated user or undefined. */
 async function getLastReview(octokit, context, prNumber, reviewUser) {
@@ -114,13 +121,13 @@ async function getLastReview(octokit, context, prNumber, reviewUser) {
         .pop();
     return lastReview;
 }
-function check(reviewersConfig, modifiedFilepaths, approvals, committers, infoLog, warnLog) {
+function check(reviewersConfig, modifiedFilepaths, approvals, contributors, infoLog, warnLog) {
     // if there's no configured reviewers, do not approve
     if (Object.keys(reviewersConfig.reviewers).length == 0) {
         return false;
     }
     let approved = true;
-    const committersSet = new Set(committers);
+    const contributorsSet = new Set(contributors);
     for (const prefix in reviewersConfig.reviewers) {
         // find files that match the rule
         const affectedFiles = modifiedFilepaths.filter((file) => file.startsWith(prefix));
@@ -130,7 +137,7 @@ function check(reviewersConfig, modifiedFilepaths, approvals, committers, infoLo
             // evaluate rule
             const reviewRequirements = reviewersConfig.reviewers[prefix];
             const possibleApprovers = getPossibleApprovers(reviewersConfig.reviewers[prefix], reviewersConfig.teams || {});
-            const relevantApprovals = approvals.filter((user) => possibleApprovers.has(user) && !committersSet.has(user));
+            const relevantApprovals = approvals.filter((user) => possibleApprovers.has(user) && !contributorsSet.has(user));
             const count = relevantApprovals.length;
             if (count < reviewRequirements.requiredApproverCount) {
                 warnLog(`${prefix} modifications require ${reviewRequirements.requiredApproverCount} reviews from:\n` +
@@ -168,7 +175,7 @@ function checkOverride(overrides, modifiedFilePaths, modifiedByUsers, infoLog, w
         let hasOnlyModifiedFileRegExs = true;
         if (crit.onlyModifiedByUsers !== undefined) {
             const testSet = new Set(crit.onlyModifiedByUsers);
-            wasOnlyModifiedByNamedUsers = modifiedByUsers.every((user) => user !== undefined && testSet.has(user));
+            wasOnlyModifiedByNamedUsers = modifiedByUsers.every((user) => testSet.has(user));
             infoLog(`${crit.description}: only by named users: ${wasOnlyModifiedByNamedUsers} (${modifiedByUsers.join(", ")})`);
         }
         if (crit.onlyModifiedFileRegExs !== undefined) {
@@ -201,10 +208,10 @@ async function run() {
         }
         const modifiedFilepaths = await getModifiedFilepaths(octokit, context, prNumber);
         const approvals = await getApprovals(octokit, context, prNumber);
-        const committers = await getCommitters(octokit, context, prNumber);
-        const approved = check(reviewersConfig, modifiedFilepaths, approvals, committers, core.info, core.warning);
+        const contributors = await getContributors(octokit, context, prNumber);
+        const approved = check(reviewersConfig, modifiedFilepaths, approvals, contributors, core.info, core.warning);
         const override = reviewersConfig.overrides !== undefined &&
-            checkOverride(reviewersConfig.overrides, modifiedFilepaths, committers, core.info, core.warning);
+            checkOverride(reviewersConfig.overrides, modifiedFilepaths, contributors, core.info, core.warning);
         const allow = approved || override;
         if (postReview) {
             const lastReview = await getLastReview(octokit, context, prNumber, reviewUser);
