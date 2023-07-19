@@ -8,10 +8,16 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Token
+        id: get_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.THM_AUTOMATION_APP_ID }}
+          private_key: ${{ secrets.THM_AUTOMATION_PRIVATE_KEY }}
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.PUB_UPDATES_TOKEN }}
+          token: ${{ steps.get_token.outputs.token }}
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
@@ -37,8 +43,8 @@ jobs:
           git tag -f -a "${TAG}" -m "${TAG}"
           git push -f --tags
         env:
-          COMMIT_USER: releasebot
-          COMMIT_EMAIL: "euler-theorem@users.noreply.github.com"
+          COMMIT_USER: thm-automation[bot]
+          COMMIT_EMAIL: "thm-automation[bot]@users.noreply.github.com"
           MESSAGE: "Release of changes in ${{ github.sha }}"
           BRANCH: release
           TAG: v2
