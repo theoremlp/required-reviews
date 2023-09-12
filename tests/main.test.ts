@@ -1,4 +1,4 @@
-import { check, checkOverride, getLastReviewApprovals } from "../src/main";
+import { check, checkOverride, getLastReviewApprovals } from "../src/lib";
 
 const reviewers = {
   teams: {
@@ -47,7 +47,7 @@ describe("test utility functions", () => {
         { user: "a", state: "APPROVED" },
         { user: "b", state: "APPROVED" },
         { user: "b", state: "REQUESTED_CHANGES" },
-      ])
+      ]),
     ).toEqual(["a"]);
   });
 });
@@ -70,7 +70,7 @@ describe("test check()", () => {
     expect(check(reviewers, files, [], [], info, warn)).toBe(false);
     expect(check(reviewers, files, ["user1"], [], info, warn)).toBe(false);
     expect(check(reviewers, files, ["user1", "user2"], [], info, warn)).toBe(
-      true
+      true,
     );
   });
 
@@ -79,13 +79,13 @@ describe("test check()", () => {
     expect(check(reviewers, files, [], [], info, warn)).toBe(false);
     expect(check(reviewers, files, ["user1"], [], info, warn)).toBe(false);
     expect(check(reviewers, files, ["user1", "user2"], [], info, warn)).toBe(
-      true
+      true,
     );
   });
 
   test("do not allow committers on the PR to self-approve", () => {
     expect(check(reviewers, ["file"], ["user1"], ["user1"], info, warn)).toBe(
-      false
+      false,
     );
   });
 });
@@ -94,29 +94,29 @@ describe("test checkOverride()", () => {
   test("user 'bot' has override for package.json", () => {
     const files = ["package.json"];
     expect(
-      checkOverride(reviewers.overrides, files, ["user1"], info, warn)
+      checkOverride(reviewers.overrides, files, ["user1"], info, warn),
     ).toBe(false);
     expect(checkOverride(reviewers.overrides, files, ["bot"], info, warn)).toBe(
-      true
+      true,
     );
   });
 
   test("user 'bot' has override for package.json in any directory", () => {
     const files = ["foo/bar/package.json"];
     expect(
-      checkOverride(reviewers.overrides, files, ["user1"], info, warn)
+      checkOverride(reviewers.overrides, files, ["user1"], info, warn),
     ).toBe(false);
     expect(checkOverride(reviewers.overrides, files, ["bot"], info, warn)).toBe(
-      true
+      true,
     );
   });
 
   test("user 'bot' has override for yarn.lock only in root", () => {
     expect(
-      checkOverride(reviewers.overrides, ["yarn.lock"], ["user1"], info, warn)
+      checkOverride(reviewers.overrides, ["yarn.lock"], ["user1"], info, warn),
     ).toBe(false);
     expect(
-      checkOverride(reviewers.overrides, ["yarn.lock"], ["bot"], info, warn)
+      checkOverride(reviewers.overrides, ["yarn.lock"], ["bot"], info, warn),
     ).toBe(true);
     expect(
       checkOverride(
@@ -124,17 +124,17 @@ describe("test checkOverride()", () => {
         ["foo/bar/yarn.lock"],
         ["bot"],
         info,
-        warn
-      )
+        warn,
+      ),
     ).toBe(false);
   });
 
   test("user 'any' has override for all files", () => {
     expect(
-      checkOverride(reviewers.overrides, ["yarn.lock"], ["any"], info, warn)
+      checkOverride(reviewers.overrides, ["yarn.lock"], ["any"], info, warn),
     ).toBe(true);
     expect(
-      checkOverride(reviewers.overrides, ["yarn.lock"], ["any"], info, warn)
+      checkOverride(reviewers.overrides, ["yarn.lock"], ["any"], info, warn),
     ).toBe(true);
     expect(
       checkOverride(
@@ -142,8 +142,8 @@ describe("test checkOverride()", () => {
         ["foo/bar/yarn.lock"],
         ["any"],
         info,
-        warn
-      )
+        warn,
+      ),
     ).toBe(true);
   });
 });
