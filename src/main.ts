@@ -61,7 +61,7 @@ function getPrNumber(context: Context): number | undefined {
 
 function getPossibleApprovers(
   conf: ReviewerConfiguration,
-  teams: { [key: string]: TeamConfiguration }
+  teams: { [key: string]: TeamConfiguration },
 ): Set<string> {
   const namedUsers = conf.users || [];
   const usersFromAllNamedTeams = (conf.teams || [])
@@ -74,7 +74,7 @@ function getPossibleApprovers(
 async function getModifiedFilepaths(
   octokit: GitHubApi,
   context: Context,
-  prNumber: number
+  prNumber: number,
 ) {
   const allPrFiles = await octokit.rest.pulls.listFiles({
     ...context.repo,
@@ -86,15 +86,18 @@ async function getModifiedFilepaths(
 /** Extracts the last review from the provided {user, state} list and filter to only approving users. */
 // visible for testing
 export function getLastReviewApprovals(
-  sparse: { user: string; state: string }[]
+  sparse: { user: string; state: string }[],
 ) {
-  const lastReviewByUser = sparse.reduce((prev, curr) => {
-    prev[curr.user] = curr.state;
-    return prev;
-  }, {} as { [key: string]: string });
+  const lastReviewByUser = sparse.reduce(
+    (prev, curr) => {
+      prev[curr.user] = curr.state;
+      return prev;
+    },
+    {} as { [key: string]: string },
+  );
 
   return Object.keys(lastReviewByUser).filter(
-    (key) => lastReviewByUser[key] === "APPROVED"
+    (key) => lastReviewByUser[key] === "APPROVED",
   );
 }
 
@@ -102,7 +105,7 @@ export function getLastReviewApprovals(
 async function getApprovals(
   octokit: GitHubApi,
   context: Context,
-  prNumber: number
+  prNumber: number,
 ) {
   // note this might eventually require some pagination
   const prReviews = await octokit.rest.pulls.listReviews({
@@ -112,7 +115,9 @@ async function getApprovals(
 
   // map to a sparse representation to make testing the reduction logic a bit easier
   const sparse = prReviews.data.flatMap((review) =>
-    review.user !== null ? { user: review.user.login, state: review.state } : []
+    review.user !== null
+      ? { user: review.user.login, state: review.state }
+      : [],
   );
 
   return getLastReviewApprovals(sparse);
@@ -122,7 +127,7 @@ async function getApprovals(
 async function getContributors(
   octokit: GitHubApi,
   context: Context,
-  prNumber: number
+  prNumber: number,
 ) {
   // capped at 250 commits
   const commits = await octokit.rest.pulls.listCommits({
@@ -132,8 +137,8 @@ async function getContributors(
 
   const committers = new Set(
     commits.data.flatMap((commit) =>
-      commit.author !== null ? [commit.author.login] : []
-    )
+      commit.author !== null ? [commit.author.login] : [],
+    ),
   ).values();
 
   const pr = await octokit.rest.pulls.get({
@@ -150,7 +155,7 @@ async function getLastReview(
   octokit: GitHubApi,
   context: Context,
   prNumber: number,
-  reviewUser: string
+  reviewUser: string,
 ) {
   const currentUserLogin =
     reviewUser !== ""
@@ -175,7 +180,7 @@ export function check(
   approvals: string[],
   contributors: string[],
   infoLog: (message: string) => void,
-  warnLog: (message: string) => void
+  warnLog: (message: string) => void,
 ) {
   // if there's no configured reviewers, do not approve
   if (Object.keys(reviewersConfig.reviewers).length == 0) {
@@ -188,24 +193,24 @@ export function check(
   for (const prefix in reviewersConfig.reviewers) {
     // find files that match the rule
     const affectedFiles = modifiedFilepaths.filter((file) =>
-      file.startsWith(prefix)
+      file.startsWith(prefix),
     );
 
     if (affectedFiles.length > 0) {
       infoLog(
         "Found affected files:\n" +
-          affectedFiles.map((f) => ` - ${f}`).join("\n")
+          affectedFiles.map((f) => ` - ${f}`).join("\n"),
       );
 
       // evaluate rule
       const reviewRequirements = reviewersConfig.reviewers[prefix];
       const possibleApprovers = getPossibleApprovers(
         reviewersConfig.reviewers[prefix],
-        reviewersConfig.teams || {}
+        reviewersConfig.teams || {},
       );
 
       const relevantApprovals = approvals.filter(
-        (user) => possibleApprovers.has(user) && !contributorsSet.has(user)
+        (user) => possibleApprovers.has(user) && !contributorsSet.has(user),
       );
       const count = relevantApprovals.length;
 
@@ -223,7 +228,7 @@ export function check(
                 "\n"
               : "") +
             `But only found ${count} approvals` +
-            (count > 0 ? `(${relevantApprovals.join(", ")})` : "")
+            (count > 0 ? `(${relevantApprovals.join(", ")})` : ""),
         );
         approved = false;
       } else {
@@ -240,7 +245,7 @@ export function checkOverride(
   modifiedFilePaths: string[],
   modifiedByUsers: string[],
   infoLog: (message: string) => void,
-  warnLog: (message: string) => void
+  warnLog: (message: string) => void,
 ) {
   return overrides.some((crit) => {
     if (
@@ -248,7 +253,7 @@ export function checkOverride(
       crit.onlyModifiedFileRegExs === undefined
     ) {
       warnLog(
-        `Ignoring override due to absent override criteria: ${crit.description}`
+        `Ignoring override due to absent override criteria: ${crit.description}`,
       );
       return false;
     }
@@ -258,24 +263,25 @@ export function checkOverride(
     if (crit.onlyModifiedByUsers !== undefined) {
       const testSet = new Set(crit.onlyModifiedByUsers);
       wasOnlyModifiedByNamedUsers = modifiedByUsers.every((user) =>
-        testSet.has(user)
+        testSet.has(user),
       );
       infoLog(
         `${
           crit.description
         }: only by named users: ${wasOnlyModifiedByNamedUsers} (${modifiedByUsers.join(
-          ", "
-        )})`
+          ", ",
+        )})`,
       );
     }
     if (crit.onlyModifiedFileRegExs !== undefined) {
-      hasOnlyModifiedFileRegExs = modifiedFilePaths.every((modifiedFile) =>
-        crit.onlyModifiedFileRegExs?.some((pattern) =>
-          new RegExp(pattern).test(modifiedFile)
-        )
+      hasOnlyModifiedFileRegExs = modifiedFilePaths.every(
+        (modifiedFile) =>
+          crit.onlyModifiedFileRegExs?.some((pattern) =>
+            new RegExp(pattern).test(modifiedFile),
+          ),
       );
       infoLog(
-        `${crit.description}: only files matching regex: ${hasOnlyModifiedFileRegExs}`
+        `${crit.description}: only files matching regex: ${hasOnlyModifiedFileRegExs}`,
       );
     }
     return wasOnlyModifiedByNamedUsers && hasOnlyModifiedFileRegExs;
@@ -293,7 +299,7 @@ async function run(): Promise<void> {
     const prNumber = getPrNumber(context);
     if (prNumber === undefined) {
       core.setFailed(
-        `Action invoked on unexpected event type '${github.context.eventName}'`
+        `Action invoked on unexpected event type '${github.context.eventName}'`,
       );
       return;
     }
@@ -307,7 +313,7 @@ async function run(): Promise<void> {
     const modifiedFilepaths = await getModifiedFilepaths(
       octokit,
       context,
-      prNumber
+      prNumber,
     );
     const approvals = await getApprovals(octokit, context, prNumber);
     const contributors = await getContributors(octokit, context, prNumber);
@@ -318,7 +324,7 @@ async function run(): Promise<void> {
       approvals,
       contributors,
       core.info,
-      core.warning
+      core.warning,
     );
     const override =
       reviewersConfig.overrides !== undefined &&
@@ -327,7 +333,7 @@ async function run(): Promise<void> {
         modifiedFilepaths,
         contributors,
         core.info,
-        core.warning
+        core.warning,
       );
 
     const allow = approved || override;
@@ -336,7 +342,7 @@ async function run(): Promise<void> {
         octokit,
         context,
         prNumber,
-        reviewUser
+        reviewUser,
       );
 
       if (allow) {
