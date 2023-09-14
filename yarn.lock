@@ -2100,13 +2100,13 @@ __metadata:
   linkType: hard
 
 "define-data-property@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "define-data-property@npm:1.0.1"
+  version: 1.1.0
+  resolution: "define-data-property@npm:1.1.0"
   dependencies:
     get-intrinsic: ^1.2.1
     gopd: ^1.0.1
     has-property-descriptors: ^1.0.0
-  checksum: 6129cda80ea82198ff22b26ae4624744c7f61b9d664ab78b28156db87849dc893a5c2e76ab8628f1115901bd1c109bd5b943f5901e0f10456254d4aa8b7cd5ae
+  checksum: 7ad4ee84cca8ad427a4831f5693526804b62ce9dfd4efac77214e95a4382aed930072251d4075dc8dc9fc949a353ed51f19f5285a84a788ba9216cc51472a093
   languageName: node
   linkType: hard
 
@@ -2198,9 +2198,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.477":
-  version: 1.4.519
-  resolution: "electron-to-chromium@npm:1.4.519"
-  checksum: 2599e5b62a045698015f5feafa0ca19d659d887a9b289cde19c24981d06ede843feb928c7ef1bb2aa63a1d25694d1b1e385c9c0959d56b4bfe98b05cb63eecf0
+  version: 1.4.520
+  resolution: "electron-to-chromium@npm:1.4.520"
+  checksum: 3c12052f6532558f363e47da4de9f91c612e6123330ec8a439e34ffe282e1199de65c844af8955086f6a64ca1cd36995c6062133edc6cb6e6160c0b8ebc40229
   languageName: node
   linkType: hard
 
@@ -5154,12 +5154,13 @@ __metadata:
   linkType: hard
 
 "set-function-name@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "set-function-name@npm:2.0.0"
+  version: 2.0.1
+  resolution: "set-function-name@npm:2.0.1"
   dependencies:
     define-data-property: ^1.0.1
+    functions-have-names: ^1.2.3
     has-property-descriptors: ^1.0.0
-  checksum: d3a3557935b39d32406cc325b23f18656f720f4081900e91c09ad6c4fe11895759e273098c447bb32002c3e21fdbbe48f81b77a7c03f4dcf0a1a48ddef8d31fc
+  checksum: 4975d17d90c40168eee2c7c9c59d023429f0a1690a89d75656306481ece0c3c1fb1ebcc0150ea546d1913e35fbd037bace91372c69e543e51fc5d1f31a9fa126
   languageName: node
   linkType: hard
 
