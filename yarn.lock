@@ -1846,9 +1846,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001539":
-  version: 1.0.30001540
-  resolution: "caniuse-lite@npm:1.0.30001540"
-  checksum: 95b9203a85ad0187a2480c341bfff6f32d61b9eb9cc323d2942025cd29fbe3f9c3dd056646996d303a0a42c968954f32994f97250e931b2ea5b9531099d6ba2d
+  version: 1.0.30001541
+  resolution: "caniuse-lite@npm:1.0.30001541"
+  checksum: 972f6c223cf4ea2c6821b817b419249285006bbf67ebe415fe58097cf07551e3bae898586736d92f7c40b9f0ac28638dbf760631c23742b780affd0254f44d17
   languageName: node
   linkType: hard
 
@@ -2198,9 +2198,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.530":
-  version: 1.4.531
-  resolution: "electron-to-chromium@npm:1.4.531"
-  checksum: a9e21d767ea6705ce2374d8e2a75b975271a9f1ce0eb9eda36c85783fbd5af6b10f9d56469f4ff313202631db5c27f24b9730149e32c01eca7a65d497c1c1df4
+  version: 1.4.532
+  resolution: "electron-to-chromium@npm:1.4.532"
+  checksum: e9f77b5d6df84aa1f7598359ec2c988c3758e58106e63f2a0a6dc4756a6733b126316e61a79a2a6643aa2a0f9a1cf9ebe66c817dcb970a3fc9d8190342ef070a
   languageName: node
   linkType: hard
 
@@ -3550,15 +3550,15 @@ __metadata:
   linkType: hard
 
 "jackspeak@npm:^2.3.5":
-  version: 2.3.5
-  resolution: "jackspeak@npm:2.3.5"
+  version: 2.3.6
+  resolution: "jackspeak@npm:2.3.6"
   dependencies:
     "@isaacs/cliui": ^8.0.2
     "@pkgjs/parseargs": ^0.11.0
   dependenciesMeta:
     "@pkgjs/parseargs":
       optional: true
-  checksum: c2c211f13ceffa05f6c2a2fe82667303c81af6f9f53619b9e4fd403207ffe666428a017f61cd43b3478759188917eda14a81f8823b6dd40a8627e46d973a37df
+  checksum: 57d43ad11eadc98cdfe7496612f6bbb5255ea69fe51ea431162db302c2a11011642f50cfad57288bd0aea78384a0612b16e131944ad8ecd09d619041c8531b54
   languageName: node
   linkType: hard
 
@@ -4918,9 +4918,9 @@ __metadata:
   linkType: hard
 
 "pure-rand@npm:^6.0.0":
-  version: 6.0.3
-  resolution: "pure-rand@npm:6.0.3"
-  checksum: d08701cfd1528c5f9cdca996776c498c92767722561f9b8f9e62645d5025c8a3bf60b90f76f262aaab124e6bb1d58e1b0850722dbca2846a19b708801956e56b
+  version: 6.0.4
+  resolution: "pure-rand@npm:6.0.4"
+  checksum: e1c4e69f8bf7303e5252756d67c3c7551385cd34d94a1f511fe099727ccbab74c898c03a06d4c4a24a89b51858781057b83ebbfe740d984240cdc04fead36068
   languageName: node
   linkType: hard
 
