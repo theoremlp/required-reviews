@@ -12,11 +12,11 @@
     "test": "yarn jest"
   },
   "devDependencies": {
-    "@types/jest": "^28.1.7",
-    "@types/node": "^18.11.10",
-    "@typescript-eslint/eslint-plugin": "^6.7.0",
-    "@typescript-eslint/parser": "^6.7.0",
-    "@vercel/ncc": "^0.34.0",
+    "@types/jest": "^29.5.6",
+    "@types/node": "^20.8.7",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "@vercel/ncc": "^0.38.1",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.29.0",
@@ -28,8 +28,8 @@
   },
   "packageManager": "yarn@3.6.4",
   "dependencies": {
-    "@actions/core": "^1.9.1",
-    "@actions/github": "^5.0.3",
-    "@octokit/webhooks-types": "^6.3.5"
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0",
+    "@octokit/webhooks-types": "^7.3.1"
   }
 }
