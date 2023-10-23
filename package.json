@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "package": "yarn build && yarn ncc build --source-map",
-    "build": "yarn && yarn lint && yarn tsc",
+    "build": "yarn install && yarn lint && yarn tsc",
     "format": "yarn eslint 'src/' --fix && prettier --write 'src/**/*.{js,jsx,css,json,md,scss,ts,tsx}'",
     "lint": "yarn eslint 'src/' && prettier --check 'src/**/*.{js,jsx,css,json,md,scss,ts,tsx}'",
     "test": "yarn jest"
@@ -26,7 +26,7 @@
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   },
-  "packageManager": "yarn@3.6.4",
+  "packageManager": "yarn@4.0.0",
   "dependencies": {
     "@actions/core": "^1.10.1",
     "@actions/github": "^6.0.0",
