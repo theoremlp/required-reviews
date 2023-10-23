@@ -145,7 +145,7 @@ async function getContributors(
     ...context.repo,
     pull_number: prNumber,
   });
-  const prAuthor = new Set(pr.data.user ? [pr.data.user.login] : []);
+  const prAuthor = new Set(pr.data.user !== null && pr.data.user !== undefined ? [pr.data.user.login] : []);
 
   return Array.from(new Set([...committers, ...prAuthor]));
 }
