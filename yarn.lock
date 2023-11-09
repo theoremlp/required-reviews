@@ -2098,9 +2098,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.535":
-  version: 1.4.578
-  resolution: "electron-to-chromium@npm:1.4.578"
-  checksum: 3bbdaf56a10c9647c8152dac4c417010a1278c651c2f0fdb5d0a326214758c332c26e30d082b11e3472592ace9a438ad731bbf90d77d4f7c764a458b52ecf158
+  version: 1.4.579
+  resolution: "electron-to-chromium@npm:1.4.579"
+  checksum: adbeb742babad518b1909e80ba407c245ac0be4a4ea787c6568e72ff8c3536666cf7cb7d531c1152141dd57e3e8e7bce3892d3a2833feea3ed0929b437aaeb33
   languageName: node
   linkType: hard
 
@@ -3347,9 +3347,9 @@ __metadata:
   linkType: hard
 
 "istanbul-lib-coverage@npm:^3.0.0, istanbul-lib-coverage@npm:^3.2.0":
-  version: 3.2.1
-  resolution: "istanbul-lib-coverage@npm:3.2.1"
-  checksum: 0b46c03d976ecc9fc7c88b9695d0b589e05a96e5ddab94bd2660df1823836636783e4b3eece4084606953bd1d45d28e247000063dabe7bb1283171a14bdbb82e
+  version: 3.2.2
+  resolution: "istanbul-lib-coverage@npm:3.2.2"
+  checksum: 40bbdd1e937dfd8c830fa286d0f665e81b7a78bdabcd4565f6d5667c99828bda3db7fb7ac6b96a3e2e8a2461ddbc5452d9f8bc7d00cb00075fa6a3e99f5b6a81
   languageName: node
   linkType: hard
 
