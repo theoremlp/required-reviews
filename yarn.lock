@@ -1700,8 +1700,8 @@ __metadata:
   linkType: hard
 
 "cacache@npm:^18.0.0":
-  version: 18.0.1
-  resolution: "cacache@npm:18.0.1"
+  version: 18.0.2
+  resolution: "cacache@npm:18.0.2"
   dependencies:
     "@npmcli/fs": "npm:^3.1.0"
     fs-minipass: "npm:^3.0.0"
@@ -1715,7 +1715,7 @@ __metadata:
     ssri: "npm:^10.0.0"
     tar: "npm:^6.1.11"
     unique-filename: "npm:^3.0.0"
-  checksum: aecafd368fbfb2fc0cda1f2f831fe5a1d8161d2121317c92ac089bcd985085e8a588e810b4471e69946f91c6d2661849400e963231563c519aa1e3dac2cf6187
+  checksum: 5ca58464f785d4d64ac2019fcad95451c8c89bea25949f63acd8987fcc3493eaef1beccc0fa39e673506d879d3fc1ab420760f8a14f8ddf46ea2d121805a5e96
   languageName: node
   linkType: hard
 
@@ -2038,9 +2038,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.601":
-  version: 1.4.620
-  resolution: "electron-to-chromium@npm:1.4.620"
-  checksum: d941cba9f4beb0fea488798a45d31c3967325f42475a009fd45067f829ff8a9ac0565f0694db3ede457464f43d8001b43877e7edb90d47ab599ecb4ea29d78fa
+  version: 1.4.622
+  resolution: "electron-to-chromium@npm:1.4.622"
+  checksum: dd7d0316ca703b1d8e4dcd9a6b25f8322ffa5ca56757af968e23d13d062debcde112bc49ec418c7a060dd098370853c347f3a93571586bb75e00403df03e9927
   languageName: node
   linkType: hard
 
