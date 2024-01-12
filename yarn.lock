@@ -2038,9 +2038,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.601":
-  version: 1.4.628
-  resolution: "electron-to-chromium@npm:1.4.628"
-  checksum: 724865c625f4caca40c3069fe95a32ae49a8e18f5949544ab107ec4533ecc8d3ba2552fbb6418197d7b4c1a50bca7cd1aa637695829f31029a213594d4b7828f
+  version: 1.4.629
+  resolution: "electron-to-chromium@npm:1.4.629"
+  checksum: 198c6ab68f31a9e818cc6f03b16a63d385ab9544ef1c8dd783d588340650541bfda1b0dca6a2e0ce0d602b17fb33a66e138433f01994b42ecf5e8b87e90d6559
   languageName: node
   linkType: hard
 
@@ -4676,13 +4676,13 @@ __metadata:
   linkType: hard
 
 "safe-regex-test@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "safe-regex-test@npm:1.0.1"
+  version: 1.0.2
+  resolution: "safe-regex-test@npm:1.0.2"
   dependencies:
     call-bind: "npm:^1.0.5"
     get-intrinsic: "npm:^1.2.2"
     is-regex: "npm:^1.1.4"
-  checksum: f9e2af64e4a8385c00239797513103bc8b3ade4b0bb71f4c6ecd8de2d92d31c891ec6fd0e6e6d1f1c597d606f5e200acf615d6c9b6baa5e422ed9fe17ddacc35
+  checksum: 0e6a472caa8f44a502c7842ea19749de42c2eb1b41cb00456061dc3746cf3468e907522f56e97a15f3b41d88f660bd3d4f9bdec064a39895f7babae0f7aafc6a
   languageName: node
   linkType: hard
 
