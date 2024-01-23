@@ -28,3 +28,4 @@ jobs:
           push-to-repo-token: ${{ steps.get_token.outputs.token }}
           commit-user: thm-automation[bot]
           commit-email: thm-automation[bot]@users.noreply.github.com
+          format: true
