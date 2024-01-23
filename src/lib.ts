@@ -278,11 +278,10 @@ export function checkOverride(
       );
     }
     if (crit.onlyModifiedFileRegExs !== undefined) {
-      hasOnlyModifiedFileRegExs = modifiedFilePaths.every(
-        (modifiedFile) =>
-          crit.onlyModifiedFileRegExs?.some((pattern) =>
-            new RegExp(pattern).test(modifiedFile),
-          ),
+      hasOnlyModifiedFileRegExs = modifiedFilePaths.every((modifiedFile) =>
+        crit.onlyModifiedFileRegExs?.some((pattern) =>
+          new RegExp(pattern).test(modifiedFile),
+        ),
       );
       infoLog(
         `${crit.description}: only files matching regex: ${hasOnlyModifiedFileRegExs}`,
