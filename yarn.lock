@@ -1136,12 +1136,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.11.6":
-  version: 20.11.6
-  resolution: "@types/node@npm:20.11.6"
+"@types/node@npm:^20.11.7":
+  version: 20.11.7
+  resolution: "@types/node@npm:20.11.7"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 375dfc75f0aa8b7fb99382d84c317e5dab2969dcc3f54d8490b119151060923eae6483839552347bc78262bbcefb2951ee131e15372f4e80b755be2dda9afe80
+  checksum: ff0428c093987f1f6e3400b91450077cf006d7f0e4ff316e20636218562c53761565ceb06bd7a161badf46e6884d78b554c7b1c3a7717cf5cb8c97f461ecd754
   languageName: node
   linkType: hard
 
@@ -2038,9 +2038,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.601":
-  version: 1.4.645
-  resolution: "electron-to-chromium@npm:1.4.645"
-  checksum: 245ba4bf9881a924b3ac29b276f83c5ed333c70dd44a1f4630a8c523719fc537fa1f14ee88d2ea6dbc195f571ce5d84ba2a067180ca6a5e3458acd9a168ada39
+  version: 1.4.647
+  resolution: "electron-to-chromium@npm:1.4.647"
+  checksum: 7eedbcce4ef987f3b71550fa457a5bb91f895d79ce7e05c815707dc4ef66afb4e4f4dfc4a3bc0126bc08a8b784d6f3c68248292602bc4014d673950245693164
   languageName: node
   linkType: hard
 
@@ -3895,9 +3895,9 @@ __metadata:
   linkType: hard
 
 "lru-cache@npm:^10.0.1, lru-cache@npm:^9.1.1 || ^10.0.0":
-  version: 10.1.0
-  resolution: "lru-cache@npm:10.1.0"
-  checksum: 207278d6fa711fb1f94a0835d4d4737441d2475302482a14785b10515e4c906a57ebf9f35bf060740c9560e91c7c1ad5a04fd7ed030972a9ba18bce2a228e95b
+  version: 10.2.0
+  resolution: "lru-cache@npm:10.2.0"
+  checksum: 502ec42c3309c0eae1ce41afca471f831c278566d45a5273a0c51102dee31e0e250a62fa9029c3370988df33a14188a38e682c16143b794de78668de3643e302
   languageName: node
   linkType: hard
 
@@ -4558,7 +4558,7 @@ __metadata:
     "@actions/github": "npm:^6.0.0"
     "@octokit/webhooks-types": "npm:^7.3.1"
     "@types/jest": "npm:^29.5.11"
-    "@types/node": "npm:^20.11.6"
+    "@types/node": "npm:^20.11.7"
     "@typescript-eslint/eslint-plugin": "npm:^6.19.1"
     "@typescript-eslint/parser": "npm:^6.19.1"
     "@vercel/ncc": "npm:^0.38.1"
