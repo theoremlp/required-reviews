@@ -1136,12 +1136,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.11.13":
-  version: 20.11.13
-  resolution: "@types/node@npm:20.11.13"
+"@types/node@npm:^20.11.15":
+  version: 20.11.15
+  resolution: "@types/node@npm:20.11.15"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: ffe143dd5e52d0d29f5bcea165b752c5355eaff8b6b933441108b540419e14c0c7e0e7912783e914125ab957e30db93f9c827e8dd437ec7e5f03def995e9a5e6
+  checksum: ec670ab67382b3a45511de0ff1a57640eb51e62dd2f2c3b4484ee35caef18c1d346bba64bd58189e9445cecbfcf9b458ca7850635eb56df2c49472dac656029f
   languageName: node
   linkType: hard
 
@@ -1536,9 +1536,9 @@ __metadata:
   linkType: hard
 
 "available-typed-arrays@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "available-typed-arrays@npm:1.0.5"
-  checksum: 4d4d5e86ea0425696f40717882f66a570647b94ac8d273ddc7549a9b61e5da099e149bf431530ccbd776bd74e02039eb8b5edf426e3e2211ee61af16698a9064
+  version: 1.0.6
+  resolution: "available-typed-arrays@npm:1.0.6"
+  checksum: c1e2e3d3a694f21bf60e0a048d8275fa7358131a0b8e6b57714318d618b59522416db67fb9f56973af0ce596f4333ef1336ca12c37a41d5a72ef79885373a7fd
   languageName: node
   linkType: hard
 
@@ -1752,9 +1752,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001580":
-  version: 1.0.30001581
-  resolution: "caniuse-lite@npm:1.0.30001581"
-  checksum: c2d049514e6af5e9a9b23646b7828191f4c2d3ef1ad999d3efe02683d56d0067d616e2eadb055fe5477f870b22e7252dc09834f95007c95f310d8eca30cfa912
+  version: 1.0.30001582
+  resolution: "caniuse-lite@npm:1.0.30001582"
+  checksum: a932dd237e0c28b5f1eb8d80f77ca0b6ce48075aaed70ba0044fd7870a899377cd6e333d13a0d3ae6d1bf030192b9625934f31def63f4636f8da8c22c2aea330
   languageName: node
   linkType: hard
 
@@ -2038,9 +2038,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.648":
-  version: 1.4.651
-  resolution: "electron-to-chromium@npm:1.4.651"
-  checksum: 69b8d562330f1956272ce69e9a20f340a7d2e765b1f01cc8bf5e62a00ba94826170bb82f946a7bd46d4164998296424a59b7c997c0ad702f42e184191b051920
+  version: 1.4.653
+  resolution: "electron-to-chromium@npm:1.4.653"
+  checksum: edc4138ab45127dfa71973135051ac57ff68b79a220a2f903512ab367a4266c297f441c95905a74499b77d9b08934bbda29557ca81834eb0f817f917e6d2b751
   languageName: node
   linkType: hard
 
@@ -2922,9 +2922,9 @@ __metadata:
   linkType: hard
 
 "ignore@npm:^5.2.0, ignore@npm:^5.2.4":
-  version: 5.3.0
-  resolution: "ignore@npm:5.3.0"
-  checksum: 51594355cea4c6ad6b28b3b85eb81afa7b988a1871feefd7062baf136c95aa06760ee934fa9590e43d967bd377ce84a4cf6135fbeb6063e063f1182a0e9a3bcd
+  version: 5.3.1
+  resolution: "ignore@npm:5.3.1"
+  checksum: 0a884c2fbc8c316f0b9f92beaf84464253b73230a4d4d286697be45fca081199191ca33e1c2e82d9e5f851f5e9a48a78e25a35c951e7eb41e59f150db3530065
   languageName: node
   linkType: hard
 
@@ -4558,7 +4558,7 @@ __metadata:
     "@actions/github": "npm:^6.0.0"
     "@octokit/webhooks-types": "npm:^7.3.1"
     "@types/jest": "npm:^29.5.11"
-    "@types/node": "npm:^20.11.13"
+    "@types/node": "npm:^20.11.15"
     "@typescript-eslint/eslint-plugin": "npm:^6.20.0"
     "@typescript-eslint/parser": "npm:^6.20.0"
     "@vercel/ncc": "npm:^0.38.1"
