@@ -1714,7 +1714,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"available-typed-arrays@npm:^1.0.6, available-typed-arrays@npm:^1.0.7":
+"available-typed-arrays@npm:^1.0.7":
   version: 1.0.7
   resolution: "available-typed-arrays@npm:1.0.7"
   dependencies:
@@ -1935,9 +1935,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001587":
-  version: 1.0.30001596
-  resolution: "caniuse-lite@npm:1.0.30001596"
-  checksum: 4124d6e927193ee31bb7237925720263ac837ef0bf6627c67a8217edfe49eefc3a385a4830d4aa92a213576a0aa6006e61c8dd57a644ec65882c15d15f625182
+  version: 1.0.30001597
+  resolution: "caniuse-lite@npm:1.0.30001597"
+  checksum: 44a268113faeee51e249cbcb3924dc3765f26cd527a134e3bb720ed20d50abd8b9291500a88beee061cc03ae9f15ddc9045d57e30d25a98efeaff4f7bb8965c1
   languageName: node
   linkType: hard
 
@@ -3100,7 +3100,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"has-tostringtag@npm:^1.0.0, has-tostringtag@npm:^1.0.1, has-tostringtag@npm:^1.0.2":
+"has-tostringtag@npm:^1.0.0, has-tostringtag@npm:^1.0.2":
   version: 1.0.2
   resolution: "has-tostringtag@npm:1.0.2"
   dependencies:
@@ -3110,11 +3110,11 @@ __metadata:
   linkType: hard
 
 "hasown@npm:^2.0.0, hasown@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "hasown@npm:2.0.1"
+  version: 2.0.2
+  resolution: "hasown@npm:2.0.2"
   dependencies:
     function-bind: "npm:^1.1.2"
-  checksum: b7f9107387ee68abed88e965c2b99e868b5e0e9d289db1ddd080706ffafb69533b4f538b0e6362585bae8d6cbd080249f65e79702f74c225990f66d6106be3f6
+  checksum: 7898a9c1788b2862cf0f9c345a6bec77ba4a0c0983c7f19d610c382343d4f98fa260686b225dfb1f88393a66679d2ec58ee310c1d6868c081eda7918f32cc70a
   languageName: node
   linkType: hard
 
@@ -5652,15 +5652,15 @@ __metadata:
   linkType: hard
 
 "which-typed-array@npm:^1.1.14":
-  version: 1.1.14
-  resolution: "which-typed-array@npm:1.1.14"
+  version: 1.1.15
+  resolution: "which-typed-array@npm:1.1.15"
   dependencies:
-    available-typed-arrays: "npm:^1.0.6"
-    call-bind: "npm:^1.0.5"
+    available-typed-arrays: "npm:^1.0.7"
+    call-bind: "npm:^1.0.7"
     for-each: "npm:^0.3.3"
     gopd: "npm:^1.0.1"
-    has-tostringtag: "npm:^1.0.1"
-  checksum: 56253d2c9d6b41b8a4af96d8c2751bac5508906bd500cdcd0dc5301fb082de0391a4311ab21258bc8d2609ed593f422c1a66f0020fcb3a1e97f719bc928b9018
+    has-tostringtag: "npm:^1.0.2"
+  checksum: c3b6a99beadc971baa53c3ee5b749f2b9bdfa3b3b9a70650dd8511a48b61d877288b498d424712e9991d16019633086bd8b5923369460d93463c5825fa36c448
   languageName: node
   linkType: hard
 
