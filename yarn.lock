@@ -1301,12 +1301,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.11.27":
-  version: 20.11.27
-  resolution: "@types/node@npm:20.11.27"
+"@types/node@npm:^20.11.28":
+  version: 20.11.28
+  resolution: "@types/node@npm:20.11.28"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 4be53485d499dd7c7896190e76a0ce1f6c6917d1f4d0b4b240b3670160fcbc548daed32beaac0fc92429b37dbeaa2496fc56f460acaab969bddb77394318a89b
+  checksum: b03f69213ac6e7cd5f7efa86139f24e23ff70a12fed04adeac5413b62d6982343ce94906f74c401c5afefda48d36ae0efd6a575240996b15a5cf80b456ab4221
   languageName: node
   linkType: hard
 
@@ -2254,9 +2254,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.668":
-  version: 1.4.704
-  resolution: "electron-to-chromium@npm:1.4.704"
-  checksum: 3256ef3ab724525f4b1cf9332c9d9181e710f84b73bbcf92fdfe7d9f34966cb0e1fafb2bc7a9b42b4d48728dcd45a85396f85bea70891c18b5bfd04d976e31ce
+  version: 1.4.707
+  resolution: "electron-to-chromium@npm:1.4.707"
+  checksum: 0651d94b6b63f384aae6b9fc4fe14e0cf22140db22bb80cf37039803fc21ff16467d9299cbdf9aad517e5d36c615d87a77dc8b886bceeb8f6f2c487fccb95792
   languageName: node
   linkType: hard
 
@@ -4832,7 +4832,7 @@ __metadata:
     "@actions/github": "npm:^6.0.0"
     "@octokit/webhooks-types": "npm:^7.4.0"
     "@types/jest": "npm:^29.5.12"
-    "@types/node": "npm:^20.11.27"
+    "@types/node": "npm:^20.11.28"
     "@typescript-eslint/eslint-plugin": "npm:^7.2.0"
     "@typescript-eslint/parser": "npm:^7.2.0"
     "@vercel/ncc": "npm:^0.38.1"
