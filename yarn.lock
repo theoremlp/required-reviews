@@ -1935,9 +1935,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001587":
-  version: 1.0.30001598
-  resolution: "caniuse-lite@npm:1.0.30001598"
-  checksum: 4104c9d1b40e906f3a410568e2357043ae6c423c18dfdbf488e5bba8f3ad799790d326ff65c1693d770335526c9f82d4c9f813df78d68c015c359644f8000b0a
+  version: 1.0.30001599
+  resolution: "caniuse-lite@npm:1.0.30001599"
+  checksum: c9a5ad806fc0d446e4f995d551b840d8fdcbe97958b7f83ff7a255a8ef5e40ca12ca1a508c66b3ab147e19eef932d28772d205c046500dd0740ea9dfb602e2e1
   languageName: node
   linkType: hard
 
@@ -2314,8 +2314,8 @@ __metadata:
   linkType: hard
 
 "es-abstract@npm:^1.22.1, es-abstract@npm:^1.22.3, es-abstract@npm:^1.23.0":
-  version: 1.23.1
-  resolution: "es-abstract@npm:1.23.1"
+  version: 1.23.2
+  resolution: "es-abstract@npm:1.23.2"
   dependencies:
     array-buffer-byte-length: "npm:^1.0.1"
     arraybuffer.prototype.slice: "npm:^1.0.3"
@@ -2354,8 +2354,8 @@ __metadata:
     regexp.prototype.flags: "npm:^1.5.2"
     safe-array-concat: "npm:^1.1.2"
     safe-regex-test: "npm:^1.0.3"
-    string.prototype.trim: "npm:^1.2.8"
-    string.prototype.trimend: "npm:^1.0.7"
+    string.prototype.trim: "npm:^1.2.9"
+    string.prototype.trimend: "npm:^1.0.8"
     string.prototype.trimstart: "npm:^1.0.7"
     typed-array-buffer: "npm:^1.0.2"
     typed-array-byte-length: "npm:^1.0.1"
@@ -2363,7 +2363,7 @@ __metadata:
     typed-array-length: "npm:^1.0.5"
     unbox-primitive: "npm:^1.0.2"
     which-typed-array: "npm:^1.1.15"
-  checksum: 366180b52315195256c600c6918cf08d15c1db4c509353044a8ad23d12bdb991e81cf309da98984e628db0e2349276576a99cc08d48bd478ceb20668a605fbcc
+  checksum: f8fa0ef674b176f177f637f1af13fb895d10306e1eb1f57dc48a5aa64a643da307f96b222054ff76f3fd9029983295192c55fc54169f464ad2fcee992c5b7310
   languageName: node
   linkType: hard
 
@@ -5188,7 +5188,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string.prototype.trim@npm:^1.2.8":
+"string.prototype.trim@npm:^1.2.9":
   version: 1.2.9
   resolution: "string.prototype.trim@npm:1.2.9"
   dependencies:
@@ -5200,7 +5200,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string.prototype.trimend@npm:^1.0.7":
+"string.prototype.trimend@npm:^1.0.8":
   version: 1.0.8
   resolution: "string.prototype.trimend@npm:1.0.8"
   dependencies:
