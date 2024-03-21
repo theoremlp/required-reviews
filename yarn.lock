@@ -1629,15 +1629,16 @@ __metadata:
   linkType: hard
 
 "array-includes@npm:^3.1.7":
-  version: 3.1.7
-  resolution: "array-includes@npm:3.1.7"
+  version: 3.1.8
+  resolution: "array-includes@npm:3.1.8"
   dependencies:
-    call-bind: "npm:^1.0.2"
-    define-properties: "npm:^1.2.0"
-    es-abstract: "npm:^1.22.1"
-    get-intrinsic: "npm:^1.2.1"
+    call-bind: "npm:^1.0.7"
+    define-properties: "npm:^1.2.1"
+    es-abstract: "npm:^1.23.2"
+    es-object-atoms: "npm:^1.0.0"
+    get-intrinsic: "npm:^1.2.4"
     is-string: "npm:^1.0.7"
-  checksum: 856a8be5d118967665936ad33ff3b07adfc50b06753e596e91fb80c3da9b8c022e92e3cc6781156d6ad95db7109b9f603682c7df2d6a529ed01f7f6b39a4a360
+  checksum: 290b206c9451f181fb2b1f79a3bf1c0b66bb259791290ffbada760c79b284eef6f5ae2aeb4bcff450ebc9690edd25732c4c73a3c2b340fcc0f4563aed83bf488
   languageName: node
   linkType: hard
 
@@ -2242,9 +2243,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.668":
-  version: 1.4.711
-  resolution: "electron-to-chromium@npm:1.4.711"
-  checksum: 48ae0e074d4c2fe4594aded24547c31ee010732a40a970751b4205dc2397f2ceeaafcded9fa03079d0453cc514a0d72ff38992235328d056bd266722452a4e13
+  version: 1.4.713
+  resolution: "electron-to-chromium@npm:1.4.713"
+  checksum: e653b6f589188606923d5060abeb28f47e002c5f46240fac787b26a9b582cc484bc9922bb428349945889e85b60418e7737c14ce6eb96ed830fb8a1e9814d285
   languageName: node
   linkType: hard
 
@@ -4775,9 +4776,9 @@ __metadata:
   linkType: hard
 
 "pure-rand@npm:^6.0.0":
-  version: 6.0.4
-  resolution: "pure-rand@npm:6.0.4"
-  checksum: 34fed0abe99d3db7ddc459c12e1eda6bff05db6a17f2017a1ae12202271ccf276fb223b442653518c719671c1b339bbf97f27ba9276dba0997c89e45c4e6a3bf
+  version: 6.1.0
+  resolution: "pure-rand@npm:6.1.0"
+  checksum: 256aa4bcaf9297256f552914e03cbdb0039c8fe1db11fa1e6d3f80790e16e563eb0a859a1e61082a95e224fc0c608661839439f8ecc6a3db4e48d46d99216ee4
   languageName: node
   linkType: hard
 
@@ -4833,7 +4834,7 @@ __metadata:
     jest: "npm:^29.7.0"
     prettier: "npm:^3.2.5"
     ts-jest: "npm:^29.1.2"
-    typescript: "npm:^5.4.2"
+    typescript: "npm:^5.4.3"
   languageName: unknown
   linkType: soft
 
@@ -5497,23 +5498,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.4.2":
-  version: 5.4.2
-  resolution: "typescript@npm:5.4.2"
+"typescript@npm:^5.4.3":
+  version: 5.4.3
+  resolution: "typescript@npm:5.4.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: f8cfdc630ab1672f004e9561eb2916935b2d267792d07ce93e97fc601c7a65191af32033d5e9c0169b7dc37da7db9bf320f7432bc84527cb7697effaa4e4559d
+  checksum: de4c69f49a7ad4b1ea66a6dcc8b055ac34eb56af059a069d8988dd811c5e649be07e042e5bf573e8d0ac3ec2f30e6c999aa651cd09f6e9cbc6113749e8b6be20
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.4.2#optional!builtin<compat/typescript>":
-  version: 5.4.2
-  resolution: "typescript@patch:typescript@npm%3A5.4.2#optional!builtin<compat/typescript>::version=5.4.2&hash=29ae49"
+"typescript@patch:typescript@npm%3A^5.4.3#optional!builtin<compat/typescript>":
+  version: 5.4.3
+  resolution: "typescript@patch:typescript@npm%3A5.4.3#optional!builtin<compat/typescript>::version=5.4.3&hash=29ae49"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: ef4fc2994cc0219dc9ada94c92106ba8d44cbfd7a0328ed6f8d730311caf66e114cdfa07fbc6f369bfc0fc182d9493851b3bf1644c06fc5818690b19ee960d72
+  checksum: 3abea475798fdf7ee46e75dafc50c85f30fd1e7061559ec2af61646f23d16c91742703f04f0ac55be52f58ca05c02f77404b7b94bbad16278c9a54c9eeb4f4ea
   languageName: node
   linkType: hard
 
