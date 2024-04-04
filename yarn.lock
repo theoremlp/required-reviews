@@ -1147,10 +1147,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/webhooks-types@npm:^7.4.0":
-  version: 7.4.0
-  resolution: "@octokit/webhooks-types@npm:7.4.0"
-  checksum: cce0117a52d2792c44577d04e8f90d868123663e7706857d180eb54742333551fb0b5ae93424f12fb112b18e5986260fe40b3cc312786f162716230634bec2b7
+"@octokit/webhooks-types@npm:^7.5.0":
+  version: 7.5.0
+  resolution: "@octokit/webhooks-types@npm:7.5.0"
+  checksum: 05284f5d07d80d29201a00ff28db5701c4b294c3e748116765712b3a45fcf168d9348456274091dc19c44a56f6851d6d6c6100f8eb82ebd6eca000f76335edb0
   languageName: node
   linkType: hard
 
@@ -1301,12 +1301,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.12.3":
-  version: 20.12.3
-  resolution: "@types/node@npm:20.12.3"
+"@types/node@npm:^20.12.4":
+  version: 20.12.4
+  resolution: "@types/node@npm:20.12.4"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 3f3c5c6ba118a18aa997c51cdc3c66259d69021f87475a99ed6c913a6956e22de49748e09843bf6447a7a63ae474e61945a6dbcca93e23b2359fc0b6f9914f7a
+  checksum: eab4ed07774b96ea77fc23eb27508dbfe094b52c8326764f5044c609c036a1570fd8708ba770e13db7ad7b69d8a834bf3a4e59fc2f1ade31d6501db76cf5a39b
   languageName: node
   linkType: hard
 
@@ -2243,9 +2243,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.668":
-  version: 1.4.724
-  resolution: "electron-to-chromium@npm:1.4.724"
-  checksum: 0ed96404b76c0499ede838ebc9a4c302af179ac3e4b2046f5cb0be956ad587fece20a72eb358f8d3827cba8e16269284e1b2abb981b376bc0d9647af5573b30e
+  version: 1.4.726
+  resolution: "electron-to-chromium@npm:1.4.726"
+  checksum: 3855834c959c78670d2ca7acd2278e504a39d2fff32bb2eb6ac383a65d9f7e7e18503028611225297e02ac1bac8da95b7b95a4038bf9fbfb8bb82449c8127b46
   languageName: node
   linkType: hard
 
@@ -4830,9 +4830,9 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^1.10.1"
     "@actions/github": "npm:^6.0.0"
-    "@octokit/webhooks-types": "npm:^7.4.0"
+    "@octokit/webhooks-types": "npm:^7.5.0"
     "@types/jest": "npm:^29.5.12"
-    "@types/node": "npm:^20.12.3"
+    "@types/node": "npm:^20.12.4"
     "@typescript-eslint/eslint-plugin": "npm:^7.5.0"
     "@typescript-eslint/parser": "npm:^7.5.0"
     "@vercel/ncc": "npm:^0.38.1"
