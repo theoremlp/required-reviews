@@ -38,15 +38,23 @@ interface Reviewers {
 
 async function loadConfig(octokit: GitHubApi, context: Context) {
   // load configuration, note that this call behaves differently than we expect with file sizes larger than 1MB
-  const reviewersRequest = await octokit.rest.repos.getContent({
-    ...context.repo,
-    path: ".github/reviewers.json",
-  });
-  if (!("content" in reviewersRequest.data)) {
-    return undefined;
-  }
-  const decodedContent = atob(reviewersRequest.data.content.replace(/\n/g, ""));
-  return JSON.parse(decodedContent) as Reviewers;
+  return octokit.rest.repos
+    .getContent({
+      ...context.repo,
+      path: ".github/reviewers.json",
+    })
+    .then((response) => {
+      if (!("content" in response.data)) {
+        return undefined;
+      }
+      const decodedContent = atob(response.data.content.replace(/\n/g, ""));
+      return JSON.parse(decodedContent) as Reviewers;
+    })
+    .catch((reason) => {
+      throw new Error(
+        "Failed to fetch .github/reviewers.json: " + JSON.stringify(reason),
+      );
+    });
 }
 
 function getPrNumber(context: Context): number | undefined {
