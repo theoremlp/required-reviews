@@ -35,15 +35,21 @@ const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 async function loadConfig(octokit, context) {
     // load configuration, note that this call behaves differently than we expect with file sizes larger than 1MB
-    const reviewersRequest = await octokit.rest.repos.getContent({
+    return octokit.rest.repos
+        .getContent({
         ...context.repo,
         path: ".github/reviewers.json",
+    })
+        .then((response) => {
+        if (!("content" in response.data)) {
+            return undefined;
+        }
+        const decodedContent = atob(response.data.content.replace(/\n/g, ""));
+        return JSON.parse(decodedContent);
+    })
+        .catch((reason) => {
+        throw new Error("Failed to fetch .github/reviewers.json: " + JSON.stringify(reason));
     });
-    if (!("content" in reviewersRequest.data)) {
-        return undefined;
-    }
-    const decodedContent = atob(reviewersRequest.data.content.replace(/\n/g, ""));
-    return JSON.parse(decodedContent);
 }
 function getPrNumber(context) {
     if (context.eventName === "pull_request") {
