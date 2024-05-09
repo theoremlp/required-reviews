@@ -1301,12 +1301,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.12.10":
-  version: 20.12.10
-  resolution: "@types/node@npm:20.12.10"
+"@types/node@npm:^20.12.11":
+  version: 20.12.11
+  resolution: "@types/node@npm:20.12.11"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: b3ab044969880084e4da22a0173fc234239de81c22fb9418bd992de98369a3065c0c6119216476711af69ff520331cf06711acdeb1959554de6bbf0912a0494e
+  checksum: c6afe7c2c4504a4f488814d7b306ebad16bf42cbb43bf9db9fe1aed8c5fb99235593c3be5088979a64526b106cf022256688e2f002811be8273d87dc2e0d484f
   languageName: node
   linkType: hard
 
@@ -1817,9 +1817,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001587":
-  version: 1.0.30001616
-  resolution: "caniuse-lite@npm:1.0.30001616"
-  checksum: 779c126bbe4be99500f52bf4f03df27058a26a4f37a335288bfef8859078edbd42a0fa75acd74464154c5e8c74c62f7248be4af8db3af3ed705bd989fb160569
+  version: 1.0.30001617
+  resolution: "caniuse-lite@npm:1.0.30001617"
+  checksum: eac442b9ad12801086be19f6dc17056827fe398f1c05983357e2531c8183ee890ffc8fb973d54519ad7114a2fd47de8f33ec66d98565b995fef1c6ba02b5bc5b
   languageName: node
   linkType: hard
 
@@ -2054,9 +2054,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.668":
-  version: 1.4.758
-  resolution: "electron-to-chromium@npm:1.4.758"
-  checksum: b8d5bc1af54ed79de0782a64f562a1230f51c026e2704f8fa19c004fe8b24861e48e9048275a0acd6fee5de99a85048d2fca9259e795d1d20f9185b5a281b096
+  version: 1.4.761
+  resolution: "electron-to-chromium@npm:1.4.761"
+  checksum: 146bb8397510a4cafa85bee0b877763b0251efeca01201f5326f24fdae923a96c617e2725566a6845072fb1e3a036f703dbe182885e3cd9cc463c20e457977b7
   languageName: node
   linkType: hard
 
@@ -4117,7 +4117,7 @@ __metadata:
     "@actions/github": "npm:^6.0.0"
     "@octokit/webhooks-types": "npm:^7.5.1"
     "@types/jest": "npm:^29.5.12"
-    "@types/node": "npm:^20.12.10"
+    "@types/node": "npm:^20.12.11"
     "@vercel/ncc": "npm:^0.38.1"
     eslint: "npm:^9.2.0"
     eslint-config-prettier: "npm:^9.1.0"
