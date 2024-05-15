@@ -2035,9 +2035,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.668":
-  version: 1.4.767
-  resolution: "electron-to-chromium@npm:1.4.767"
-  checksum: 2352e05e5ed039ce36d7c6dde5df28e308dd9fba03b3cc008703dc468632e6b9b70be9bdf9a21a2942549efd8c05cb3b5b05fd05b9bc3955208814ee77135a19
+  version: 1.4.769
+  resolution: "electron-to-chromium@npm:1.4.769"
+  checksum: 3c38b00bfa09eda32bc209be00ad6f564a84a8774d93ef09f9bbe032a835bbc2795b599bb6c69c7dbad3592ba2080b2a647297f41b7266ec3a8bf4f1ab574d3a
   languageName: node
   linkType: hard
 
@@ -3955,7 +3955,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picocolors@npm:^1.0.0":
+"picocolors@npm:^1.0.1":
   version: 1.0.1
   resolution: "picocolors@npm:1.0.1"
   checksum: fa68166d1f56009fc02a34cdfd112b0dd3cf1ef57667ac57281f714065558c01828cdf4f18600ad6851cbe0093952ed0660b1e0156bddf2184b6aaf5817553a5
@@ -4670,16 +4670,16 @@ __metadata:
   linkType: hard
 
 "update-browserslist-db@npm:^1.0.13":
-  version: 1.0.15
-  resolution: "update-browserslist-db@npm:1.0.15"
+  version: 1.0.16
+  resolution: "update-browserslist-db@npm:1.0.16"
   dependencies:
     escalade: "npm:^3.1.2"
-    picocolors: "npm:^1.0.0"
+    picocolors: "npm:^1.0.1"
   peerDependencies:
     browserslist: ">= 4.21.0"
   bin:
     update-browserslist-db: cli.js
-  checksum: 6800bfac6933f618640bae2f8f582a6b0d83ea73ef1330b0da9090862a370bc23c64650e753c454e39964eef3febe72578065ed06412326be492b5f5a029d0ef
+  checksum: 071bf0b2fb8568db6cd42ee2598ac9b87c794a7229fcbf1b035ae7f883e770c07143f16a5371525d5bcb94b99f9a1b279036142b0195ffd4cf5a0008fc4a500e
   languageName: node
   linkType: hard
 
