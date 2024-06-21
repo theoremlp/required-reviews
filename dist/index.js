@@ -30,7 +30,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.run = exports.checkOverride = exports.check = exports.getLastReviewApprovals = void 0;
+exports.getLastReviewApprovals = getLastReviewApprovals;
+exports.check = check;
+exports.checkOverride = checkOverride;
+exports.run = run;
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
 async function loadConfig(octokit, context) {
@@ -85,7 +88,6 @@ function getLastReviewApprovals(sparse) {
     }, {});
     return Object.keys(lastReviewByUser).filter((key) => lastReviewByUser[key] === "APPROVED");
 }
-exports.getLastReviewApprovals = getLastReviewApprovals;
 /** Gets current approvals. */
 async function getApprovals(octokit, context, prNumber) {
     // note this might eventually require some pagination
@@ -172,7 +174,6 @@ function check(reviewersConfig, modifiedFilepaths, approvals, contributors, info
     }
     return approved;
 }
-exports.check = check;
 /** returns true if at least one OverrideCriteria is satisfied. */
 function checkOverride(overrides, modifiedFilePaths, modifiedByUsers, infoLog, warnLog) {
     return overrides.some((crit) => {
@@ -198,7 +199,6 @@ function checkOverride(overrides, modifiedFilePaths, modifiedByUsers, infoLog, w
         return wasOnlyModifiedByNamedUsers && hasOnlyModifiedFileRegExs;
     });
 }
-exports.checkOverride = checkOverride;
 async function run() {
     try {
         const authToken = core.getInput("github-token");
@@ -264,7 +264,6 @@ async function run() {
         }
     }
 }
-exports.run = run;
 
 
 /***/ }),
