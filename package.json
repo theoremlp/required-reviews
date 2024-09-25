@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.13",
-    "@types/node": "^22.6.1",
+    "@types/node": "^22.7.0",
     "@vercel/ncc": "^0.38.2",
     "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
