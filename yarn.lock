@@ -1226,10 +1226,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/webhooks-types@npm:^7.5.1":
-  version: 7.5.1
-  resolution: "@octokit/webhooks-types@npm:7.5.1"
-  checksum: a6c4b32ec2fa994e1024624d168259bfe76350f32b62e68c9675c389bad3c7e2bbeb654226d51f46257eb7fa9805277bba091dd8102ea6741d95a62013555b6a
+"@octokit/webhooks-types@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "@octokit/webhooks-types@npm:7.6.1"
+  checksum: 0b11bd7e8d13b5a9cf14214421298a423d0180a5e1aaaea876ee4db6f97b5cca536f48d89af63105db75419d777a2402733eb0e110002d4dd59581ef36037bdc
   languageName: node
   linkType: hard
 
@@ -1885,9 +1885,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001663":
-  version: 1.0.30001666
-  resolution: "caniuse-lite@npm:1.0.30001666"
-  checksum: c3b5a85f658d140ba53f6e99ee824935194c78effd6f3b7e62c2c0d17f8886a12f5d4ce775f8faf7172f8373fffef713ecfbef2702beb053d558e92d47844b10
+  version: 1.0.30001667
+  resolution: "caniuse-lite@npm:1.0.30001667"
+  checksum: 5f0c48abb806737c422f05d0d9dda72facc25ee8adbae2c2ea9c57b87d9c2fa9ad8c3f6d54f21aca4e31ee1742cb5dd1543bf6b9133e3f77f79a645876322414
   languageName: node
   linkType: hard
 
@@ -2124,9 +2124,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.28":
-  version: 1.5.31
-  resolution: "electron-to-chromium@npm:1.5.31"
-  checksum: b1fc54bb6eca9a8e6ed3870d4d2de74f080b4e6384f3bbeef8c9d8911cbe3ccb1f57fd2c8f800b871841836134f2597a7edcb2e4dc644b9281b95fd0323cde46
+  version: 1.5.32
+  resolution: "electron-to-chromium@npm:1.5.32"
+  checksum: 906b852f67e9de0a5f643085570f7383c5bb28b28b1dd0916bdc55d24d8a2238eb61c26db51a766630993e4c55fb7bbf6551b0ae570751fec2503eb592611c89
   languageName: node
   linkType: hard
 
@@ -4205,7 +4205,7 @@ __metadata:
   dependencies:
     "@actions/core": "npm:^1.11.0"
     "@actions/github": "npm:^6.0.0"
-    "@octokit/webhooks-types": "npm:^7.5.1"
+    "@octokit/webhooks-types": "npm:^7.6.1"
     "@types/jest": "npm:^29.5.13"
     "@types/node": "npm:^22.7.4"
     "@vercel/ncc": "npm:^0.38.2"
