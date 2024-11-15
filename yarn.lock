@@ -1552,14 +1552,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vercel/ncc@npm:^0.38.2":
-  version: 0.38.2
-  resolution: "@vercel/ncc@npm:0.38.2"
+"@vercel/ncc@npm:^0.38.3":
+  version: 0.38.3
+  resolution: "@vercel/ncc@npm:0.38.3"
   dependencies:
     node-gyp: "npm:latest"
   bin:
     ncc: dist/ncc/cli.js
-  checksum: 9a039147e379b7e5fc48e42b4ba1b5bdf4425db6de9de857b4a2bb7391805a7155e35c20d4da2159e09189b0ab62462900fcf09173a5b00886033c874bc47145
+  checksum: f1a05a58e9c90d6940027b628590715a62bf1611c47bca546ad51bd6a0e8d25ce64c1c39eb27ba0b6747017182cb59ec42088da8d6530a6d561e9e1a4e8c9941
   languageName: node
   linkType: hard
 
@@ -2148,9 +2148,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.41":
-  version: 1.5.58
-  resolution: "electron-to-chromium@npm:1.5.58"
-  checksum: e3b183e65fe8fe8ba332072a947adee70d00c13d8d8360faf2623f0a452cc5f4d20ebb6ee4a2ddc3f5959eaea3ae18c53a00d061d20b4a21a4b13a4a7d90ead3
+  version: 1.5.60
+  resolution: "electron-to-chromium@npm:1.5.60"
+  checksum: 0a608d23a5d0a582fe412f6f8d843a9f98c6375016e2f7b38e7b47e86f61a86477a42e4ee5ca48a0454895974990fc5ae66752adb81d57c8c91bb064dabb0304
   languageName: node
   linkType: hard
 
@@ -4223,7 +4223,7 @@ __metadata:
     "@octokit/webhooks-types": "npm:^7.6.1"
     "@types/jest": "npm:^29.5.14"
     "@types/node": "npm:^22.9.0"
-    "@vercel/ncc": "npm:^0.38.2"
+    "@vercel/ncc": "npm:^0.38.3"
     eslint: "npm:^9.14.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-prettier: "npm:^5.2.1"
