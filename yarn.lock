@@ -2137,9 +2137,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.73":
-  version: 1.5.105
-  resolution: "electron-to-chromium@npm:1.5.105"
-  checksum: e89768e86b49024210bdf066563b7700e6e2dd9a5dd82738adfc509b2bfe882e34c9645829d7e8d5866b2a7191a74682365a25c0775b89b7026c4bda7ef14b58
+  version: 1.5.107
+  resolution: "electron-to-chromium@npm:1.5.107"
+  checksum: 2c007b3ad7ea70d8c5aa7abd8ef972b838cccc21d64320760c7c0b9f32e9e2be4f19881edf59369bc410616cfe7ee1ea8f8b608f994dff0267d4b32b335676e8
   languageName: node
   linkType: hard
 
@@ -2224,14 +2224,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-prettier@npm:^10.0.1":
-  version: 10.0.1
-  resolution: "eslint-config-prettier@npm:10.0.1"
+"eslint-config-prettier@npm:^10.0.2":
+  version: 10.0.2
+  resolution: "eslint-config-prettier@npm:10.0.2"
   peerDependencies:
     eslint: ">=7.0.0"
   bin:
     eslint-config-prettier: build/bin/cli.js
-  checksum: ba6875df0fc4fd3c7c6e2ec9c2e6a224462f7afc662f4cf849775c598a3571c1be136a9b683b12971653b3dcf3f31472aaede3076524b46ec9a77582630158e5
+  checksum: 6d4bbdd5d1810457c63035eef1a085e00bfce34873a5cf461fc696eb635c6aa408184aab6ff6c7e979bb0992485f6dc75e0c993f7193b0d4ceec25f32505c531
   languageName: node
   linkType: hard
 
@@ -3735,8 +3735,8 @@ __metadata:
   linkType: hard
 
 "minipass-fetch@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "minipass-fetch@npm:4.0.0"
+  version: 4.0.1
+  resolution: "minipass-fetch@npm:4.0.1"
   dependencies:
     encoding: "npm:^0.1.13"
     minipass: "npm:^7.0.3"
@@ -3745,7 +3745,7 @@ __metadata:
   dependenciesMeta:
     encoding:
       optional: true
-  checksum: 4b0772dbee77727b469dc5bfc371541d9aba1e243fbb46ddc1b9ff7efa4de4a4cf5ff3a359d6a3b3a460ca26df9ae67a9c93be26ab6417c225e49d63b52b2801
+  checksum: 7ddfebdbb87d9866e7b5f7eead5a9e3d9d507992af932a11d275551f60006cf7d9178e66d586dbb910894f3e3458d27c0ddf93c76e94d49d0a54a541ddc1263d
   languageName: node
   linkType: hard
 
@@ -4180,7 +4180,7 @@ __metadata:
     "@types/node": "npm:^22.13.5"
     "@vercel/ncc": "npm:^0.38.3"
     eslint: "npm:^9.21.0"
-    eslint-config-prettier: "npm:^10.0.1"
+    eslint-config-prettier: "npm:^10.0.2"
     eslint-plugin-prettier: "npm:^5.2.3"
     jest: "npm:^29.7.0"
     prettier: "npm:^3.5.2"
@@ -4755,8 +4755,8 @@ __metadata:
   linkType: hard
 
 "update-browserslist-db@npm:^1.1.1":
-  version: 1.1.2
-  resolution: "update-browserslist-db@npm:1.1.2"
+  version: 1.1.3
+  resolution: "update-browserslist-db@npm:1.1.3"
   dependencies:
     escalade: "npm:^3.2.0"
     picocolors: "npm:^1.1.1"
@@ -4764,7 +4764,7 @@ __metadata:
     browserslist: ">= 4.21.0"
   bin:
     update-browserslist-db: cli.js
-  checksum: e7bf8221dfb21eba4a770cd803df94625bb04f65a706aa94c567de9600fe4eb6133fda016ec471dad43b9e7959c1bffb6580b5e20a87808d2e8a13e3892699a9
+  checksum: 87af2776054ffb9194cf95e0201547d041f72ee44ce54b144da110e65ea7ca01379367407ba21de5c9edd52c74d95395366790de67f3eb4cc4afa0fe4424e76f
   languageName: node
   linkType: hard
 
