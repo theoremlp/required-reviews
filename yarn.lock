@@ -2144,9 +2144,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.73":
-  version: 1.5.126
-  resolution: "electron-to-chromium@npm:1.5.126"
-  checksum: a331a9e5fc8dea52f9bd57ab49c5eb7909e14d32f03431c385aace6b97ec6f5d80db7e38516bdf8ee85859a8e72a9e8c34e29cc62ba64b96412aeb7338130781
+  version: 1.5.128
+  resolution: "electron-to-chromium@npm:1.5.128"
+  checksum: 29e441eb3976e23c3635ec1fd04c31c7cddc24ceb33ee93fadcccd1ad4c37c6fa565860368be4d680d5828967abf58036fd5160051d0ee8a2a4bccc7ba698721
   languageName: node
   linkType: hard
 
@@ -4064,9 +4064,9 @@ __metadata:
   linkType: hard
 
 "pirates@npm:^4.0.4":
-  version: 4.0.6
-  resolution: "pirates@npm:4.0.6"
-  checksum: d02dda76f4fec1cbdf395c36c11cf26f76a644f9f9a1bfa84d3167d0d3154d5289aacc72677aa20d599bb4a6937a471de1b65c995e2aea2d8687cbcd7e43ea5f
+  version: 4.0.7
+  resolution: "pirates@npm:4.0.7"
+  checksum: 2427f371366081ae42feb58214f04805d6b41d6b84d74480ebcc9e0ddbd7105a139f7c653daeaf83ad8a1a77214cf07f64178e76de048128fec501eab3305a96
   languageName: node
   linkType: hard
 
