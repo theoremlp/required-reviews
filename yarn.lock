@@ -1912,9 +1912,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001688":
-  version: 1.0.30001709
-  resolution: "caniuse-lite@npm:1.0.30001709"
-  checksum: e48c245d3f2024df8bf89924c3717938912577772219e3a34d7f0e13a379900c07bcdf204129654cfe60988f3e7136bf7f62eeb2e263f47744740bfbb61ec317
+  version: 1.0.30001710
+  resolution: "caniuse-lite@npm:1.0.30001710"
+  checksum: 8e496924c5cf91f844945f6ab675c89edf9e7a55be880c718ca99bf4e1afeeff3d11d743558fcfa001c60eaf60e7489037fa6c2d9cba1e56a53d1a7b25544282
   languageName: node
   linkType: hard
 
@@ -2144,9 +2144,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.73":
-  version: 1.5.130
-  resolution: "electron-to-chromium@npm:1.5.130"
-  checksum: ccca4d64fb687e9cb91105fd23a3cd27dce22a9a934b12a829b8258fb38b2138d805fb14256fcf9be6bee8b29bdbb14773441ac4e2a8c811369edb8431c0d356
+  version: 1.5.132
+  resolution: "electron-to-chromium@npm:1.5.132"
+  checksum: ff50f38e26c5acdce1010703197a1cd1b9d9d789160ee1d4a2fc9f5dff6a030632ab36893156147d7360e891dd7151e156c6003ca271d4acbb4e501788ff22bd
   languageName: node
   linkType: hard
 
@@ -4547,12 +4547,12 @@ __metadata:
   linkType: hard
 
 "synckit@npm:^0.11.0":
-  version: 0.11.1
-  resolution: "synckit@npm:0.11.1"
+  version: 0.11.2
+  resolution: "synckit@npm:0.11.2"
   dependencies:
     "@pkgr/core": "npm:^0.2.0"
     tslib: "npm:^2.8.1"
-  checksum: a2695a65b33a1f1dc6f7817beed2c60f4f2c23d0c39af48d020936bc5a0b1618db2bdb0b31089f055a87ef7308bf4574bd301d70d4c58ac6710c9731ed7b3bc3
+  checksum: 8dbf20a9f1cb9f168062b505302f87b434b6f808d61af94183583b1201f33ba0026469fb81dd20074c980bc56237c6bd4ccb640433b5734eef14f5a90c1bbf18
   languageName: node
   linkType: hard
 
