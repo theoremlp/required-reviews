@@ -2543,9 +2543,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.173":
-  version: 1.5.173
-  resolution: "electron-to-chromium@npm:1.5.173"
-  checksum: 64a5f74758a5588a636636813f317c7b21e2fe2f0be22007874fb88d34ad0306cc6a9be4822fa8bdbee92a120c76ed688e18a1c36270347d1cb6e9e0de2b364e
+  version: 1.5.176
+  resolution: "electron-to-chromium@npm:1.5.176"
+  checksum: 6bf77396636f9eaefbdd43bca0de7d743526261a08a5f96aefb972f7b2d3d7967bc4e5d7bd9ce3274ecba15e66944e9f71520c4d65a2656d121e4267223b82c6
   languageName: node
   linkType: hard
 
@@ -2641,9 +2641,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^5.5.0":
-  version: 5.5.0
-  resolution: "eslint-plugin-prettier@npm:5.5.0"
+"eslint-plugin-prettier@npm:^5.5.1":
+  version: 5.5.1
+  resolution: "eslint-plugin-prettier@npm:5.5.1"
   dependencies:
     prettier-linter-helpers: "npm:^1.0.0"
     synckit: "npm:^0.11.7"
@@ -2657,7 +2657,7 @@ __metadata:
       optional: true
     eslint-config-prettier:
       optional: true
-  checksum: 83210819211ad98f305b719352c151794c8c6403d3888c0f8cca76429bf91235753c15d060eb8097d3872e85e9224b8a46280105e468d8c578e2ca9f253bfa57
+  checksum: 4d750c70d97d6ef50776bc0a27eeececaac64792fb50713213c69231ed475aa9822a3d177870300fee537d3e24d0dc8eed1528929cab2d20f6e7ec37484648a3
   languageName: node
   linkType: hard
 
@@ -4569,7 +4569,7 @@ __metadata:
     "@vercel/ncc": "npm:^0.38.3"
     eslint: "npm:^9.29.0"
     eslint-config-prettier: "npm:^10.1.5"
-    eslint-plugin-prettier: "npm:^5.5.0"
+    eslint-plugin-prettier: "npm:^5.5.1"
     jest: "npm:^30.0.3"
     prettier: "npm:^3.6.1"
     ts-jest: "npm:^29.4.0"
